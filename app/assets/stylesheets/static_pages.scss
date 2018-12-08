@@ -1,3 +1,107 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+h1 {
+  font-size: 56px;
+  font-family: sans-serif;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+p {
+  font-size: 20px;
+  font-family: georgia;
+  line-height: 30px;
+  max-width: 750px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background-color: #eee;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  min-width: 300px;
+}
+
+input {
+  max-width: 100%;
+  background-color: #eee;
+  border: 0;
+  border-bottom: 5px solid cornflowerblue;
+  padding: 15px 30px;
+  font-size: 20px;
+  margin: 15px;
+  outline-color: cornflowerblue;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+label {
+  width: 100%;
+  font-size: 20px;
+  font-family: georgia;
+  text-align: left;
+  font-size: 20px;
+  margin: 15px 30px 0 30px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+input[type='submit'] {
+  background: cornflowerblue;
+  color: #fff;
+  padding: 15px 30px 10px 30px;
+  font-size: 20px;
+  border: 0;
+  outline-color: cornflowerblue;
+  border-bottom: 5px solid cornflowerblue;
+  margin: 15px;
+  cursor: pointer;
+  max-width: max-content;
+}
+
+input[type='submit']:hover {
+  transition: all ease-in 0.5s;
+  background: rgba(245, 245, 245, 1);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+#about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px;
+  background-color: #fff;
+  max-width: 1000px;
+}
