@@ -1,16 +1,18 @@
-<nav>
+<% if current_user %>
 
-  <li><a class="logo" href="/" title="Home">Docify</a></li>
-
-  <li><a href="/about" title="About">About</a></li>
-
-  <% if current_user %>
-
+  <nav class="logged-in">
+    <li><a class="logo" href="/" title="Home">Docify</a></li>
+    <li><a href="/about" title="About">About</a></li>
+    <li><a href="/documents" title="Documents">Documents</a></li>
     <li><a href="/logout">Logout</a></li>
+  </nav>
 
-    <% else %>
+  <% else %>
 
+    <nav>
+      <li><a class="logo" href="/" title="Home">Docify</a></li>
+      <li><a href="/about" title="About">About</a></li>
       <li><a href="/login" title="Login">Login</a></li>
+    </nav>
 
-  <% end %>
-</nav>
+<% end %>

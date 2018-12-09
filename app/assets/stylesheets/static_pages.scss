@@ -44,6 +44,10 @@ nav {
     font-size: 48px;
     color: rgba(0, 0, 0, 0.8);
   }
+
+  &.logged-in {
+    max-width: 450px;
+  }
 }
 
 h1 {
