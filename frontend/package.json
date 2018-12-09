@@ -1,0 +1,32 @@
+{
+  "name": "docify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index",
+  "scripts": {
+    "start": "webpack-dev-server src",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "Sean W. Lawrence <sean.w.lawrence@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "slate": "^0.44.8",
+    "slate-react": "^0.21.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "@types/slate": "^0.43.4",
+    "typescript": "^3.2.2",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
