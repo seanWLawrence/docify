@@ -11,27 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, id: :document_title %>
-  </div>
 
-  <div class="field">
     <%= form.label :body %>
     <%= form.text_area :body, id: :document_body %>
-  </div>
 
-  <div class="field">
     <%= form.label :private %>
     <%= form.check_box :private, id: :document_private %>
-  </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :document_user_id %>
-  </div>
-
-  <div class="actions">
+    <%= form.text_field :user_id, value: current_user.id, hidden: true %>
     <%= form.submit %>
-  </div>
 <% end %>

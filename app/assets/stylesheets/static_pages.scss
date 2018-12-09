@@ -83,7 +83,8 @@ form {
   min-width: 300px;
 }
 
-input {
+input,
+textarea {
   max-width: 100%;
   background-color: #eee;
   border: 0;
@@ -93,6 +94,10 @@ input {
   margin: 15px;
   outline-color: cornflowerblue;
   color: rgba(0, 0, 0, 0.8);
+}
+
+textarea {
+  min-height: 200px;
 }
 
 label {
