@@ -1,10 +1,17 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
 
+  # authorization loader
+  load_and_authorize_resource
+
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    if current_user != nil
+      @documents = Document.all.where(user_id: current_user.id)
+    else
+      @documents = []
+    end
   end
 
   # GET /documents/1
@@ -24,11 +31,11 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(document_params)
+    @document = Document.new(:title, :body, :private, user_id: current_user.id)
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to @document, notice: 'Document was successfully created.' }
+        format.html { redirect_to @document, notice: "Document was successfully created." }
         format.json { render :show, status: :created, location: @document }
       else
         format.html { render :new }
@@ -42,7 +49,7 @@ class DocumentsController < ApplicationController
   def update
     respond_to do |format|
       if @document.update(document_params)
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to @document, notice: "Document was successfully updated." }
         format.json { render :show, status: :ok, location: @document }
       else
         format.html { render :edit }
@@ -56,19 +63,20 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+      format.html { redirect_to documents_url, notice: "Document was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_document
-      @document = Document.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def document_params
-      params.require(:document).permit(:title, :body, :private, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_document
+    @document = Document.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def document_params
+    params.require(:document).permit(:title, :body, :private, :user_id)
+  end
 end

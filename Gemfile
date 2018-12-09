@@ -55,3 +55,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # encryption for passwords
 gem 'bcrypt'
+
+# authorization
+gem 'cancancan', '~> 2.0'
