@@ -1,0 +1,16 @@
+<nav>
+
+  <li><a class="logo" href="/" title="Home">Docify</a></li>
+
+  <li><a href="/about" title="About">About</a></li>
+
+  <% if current_user %>
+
+    <li><a href="/logout">Logout</a></li>
+
+    <% else %>
+
+      <li><a href="/login" title="Login">Login</a></li>
+
+  <% end %>
+</nav>

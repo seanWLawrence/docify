@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+
+<main id="document">
+  <div class="document-text">
+    <h1><%= @document.title %></h1>
+
+    <p><%= @document.body %></p>
+
+  </div>
+  <div class="navigation-links">
+    <%= link_to 'Back', documents_path %>
+    <%= link_to 'Edit', edit_document_path(@document) %> 
+  </div>
+</main>
+

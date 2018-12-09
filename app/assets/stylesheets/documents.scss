@@ -1,0 +1,46 @@
+// Place all the styles related to the Documents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#document {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.document-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px;
+  background-color: #fff;
+  max-width: 1000px;
+}
+
+.navigation-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+
+  a {
+    background: cornflowerblue;
+    color: #fff;
+    padding: 15px 30px 10px 30px;
+    font-size: 20px;
+    border: 0;
+    outline-color: cornflowerblue;
+    border-bottom: 5px solid cornflowerblue;
+    margin: 15px;
+    cursor: pointer;
+    max-width: max-content;
+    text-decoration: none;
+    font-family: sans-serif;
+  }
+
+  a:hover {
+    transition: all ease-in 0.5s;
+    background: rgba(245, 245, 245, 1);
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
