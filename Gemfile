@@ -58,3 +58,13 @@ gem 'bcrypt'
 
 # authorization
 gem 'cancancan', '~> 2.0'
+
+# text editor (next four)
+
+gem "dante-editor"
+
+gem 'underscore-rails' 
+
+gem 'rails-sanitize-js'
+
+gem 'jquery-rails'
