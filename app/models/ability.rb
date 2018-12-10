@@ -8,11 +8,10 @@ class Ability
 
     can :read, Document, private: false
 
-    can :manage, Document, user_id: user.id
-
-    puts user.id
+    can [:create, :new], User
 
     if user.present?
+      can :manage, Document, user_id: user.id
     end
   end
 end
