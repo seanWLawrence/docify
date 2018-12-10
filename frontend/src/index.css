@@ -1,0 +1,16 @@
+h1 {
+  font-size: 100px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  max-height: 20em;
+}
+
+ing.selected {
+  display: block;
+  max-width: 100%;
+  max-height: 20em;
+  box-shadow: 0 0 0 2px cornflowerblue;
+}

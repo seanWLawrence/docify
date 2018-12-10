@@ -4,30 +4,39 @@
   "description": "",
   "main": "src/index",
   "scripts": {
-    "start": "webpack -w",
+    "dev": "NODE_ENV='development' webpack -w",
+    "start": "NODE_ENV='production' webpack -w",
     "build": "webpack"
   },
   "keywords": [],
   "author": "Sean W. Lawrence <sean.w.lawrence@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "immutable": "^4.0.0-rc.12",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "slate": "^0.44.8",
-    "slate-react": "^0.21.14"
+    "Dante2": "^0.5.0-rc4",
+    "prismjs": "^1.15.0",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
+    "@types/react": "^16.7.13",
+    "@types/react-dom": "^16.0.11",
     "@types/slate": "^0.43.4",
     "babel-loader": "^8.0.4",
+    "css-loader": "^2.0.0",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.23.1",
     "typescript": "^3.2.2",
     "webpack": "^4.27.1",
+    "webpack-cleanup-plugin": "^0.5.1",
     "webpack-cli": "^3.1.2"
   }
 }
