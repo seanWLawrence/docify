@@ -13,6 +13,42 @@ let isItalicHotkey = isKeyHotkey('mod+i');
 let isUnderlinedHotkey = isKeyHotkey('mod+u');
 let isCodeHotkey = isKeyHotkey('mod+`');
 
+let Toolbar = ({ children }) => (
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      width: 'max-content',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      boxShadow: '0 1px 9px #ddd',
+      position: 'fixed',
+      right: 0,
+      backgroundColor: '#fff',
+      zIndex: 2,
+    }}
+  >
+    {children}
+  </div>
+);
+
+let Button = ({ text, onClick }) => (
+  <button
+    onClick={onClick}
+    style={{
+      border: 0,
+      padding: '10px 15px',
+      maxWidth: 'max-content',
+      margin: 10,
+      cursor: 'pointer',
+      color: 'cornflowerblue',
+    }}
+  >
+    {text}
+  </button>
+);
+
 let debounce = (fn, time) => {
   let timeout;
 
@@ -387,7 +423,7 @@ class Editor extends PureComponent<{}, State> {
    * @param {String} type
    */
 
-  onClickBlock = (event, type) => {
+  onClickBlock = ({ event, type }) => {
     event.preventDefault();
 
     let { editor } = this;
@@ -435,9 +471,10 @@ class Editor extends PureComponent<{}, State> {
     let isActive = this.hasMark(type);
 
     return (
-      <button onMouseDown={event => this.onClickMark({ event, type })}>
-        <span>{icon}</span>
-      </button>
+      <Button
+        onClick={event => this.onClickMark({ event, type })}
+        text={icon}
+      />
     );
   };
 
@@ -456,9 +493,10 @@ class Editor extends PureComponent<{}, State> {
     }
 
     return (
-      <button onMouseDown={event => this.onClickBlock(event, type)}>
-        <span>{icon}</span>
-      </button>
+      <Button
+        onClick={event => this.onClickBlock({ event, type })}
+        text={icon}
+      />
     );
   };
 
@@ -467,29 +505,25 @@ class Editor extends PureComponent<{}, State> {
 
     return (
       <div>
-        <div>
-          {this.renderMarkButton({ type: 'bold', icon: 'format_bold' })}
-          {this.renderMarkButton({ type: 'italic', icon: 'format_italic' })}
+        <Toolbar>
+          {this.renderMarkButton({ type: 'bold', icon: 'B' })}
+          {this.renderMarkButton({ type: 'italic', icon: 'I' })}
           {this.renderMarkButton({
             type: 'underlined',
-            icon: 'format_underlined',
+            icon: '_',
           })}
-          {this.renderMarkButton({ type: 'code', icon: 'code' })}
-          {this.renderBlockButton({ type: 'heading-one', icon: 'looks_one' })}
-          {this.renderBlockButton({ type: 'heading-two', icon: 'looks_two' })}
+          {this.renderMarkButton({ type: 'code', icon: '</>' })}
+          {this.renderBlockButton({ type: 'heading-one', icon: 'H1' })}
+          {this.renderBlockButton({ type: 'heading-two', icon: 'H2' })}
           {this.renderBlockButton({
             type: 'block-quote',
-            icon: 'format_quote',
+            icon: '"',
           })}
           {this.renderBlockButton({
             type: 'numbered-list',
-            icon: 'format_list_numbered',
+            icon: 'List',
           })}
-          {this.renderBlockButton({
-            type: 'bulleted-list',
-            icon: 'format_list_bulleted',
-          })}
-        </div>
+        </Toolbar>
 
         <Slate
           autofocus

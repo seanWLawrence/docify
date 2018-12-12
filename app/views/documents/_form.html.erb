@@ -20,15 +20,3 @@
     <%= hidden_field_tag(:user_id, current_user.id) %>
     <%= form.submit %>
 <% end %>
-<div id="document_body" name="document[body]"></div>
-
-<script type="text/javascript">
-  editor = new Dante.Editor(
-    {
-      el: "#document_body",
-      store_url: '/documents/11/edit'
-    }
-  );
-
-  editor.start()
-</script>

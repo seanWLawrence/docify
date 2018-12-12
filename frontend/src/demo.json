@@ -3,13 +3,13 @@
     "nodes": [
       {
         "object": "block",
-        "type": "paragraph",
+        "type": "heading-one",
         "nodes": [
           {
             "object": "text",
             "leaves": [
               {
-                "text": "The editor gives you full control over the logic you can add. For example, it's fairly common to want to add markdown-like shortcuts to editors. So that, when you start a line with \"> \" you get a blockquote that looks like this:"
+                "text": "Create beautiful documents"
               }
             ]
           }
@@ -23,7 +23,7 @@
             "object": "text",
             "leaves": [
               {
-                "text": "A wise quote."
+                "text": "This entire page is fully editable - try it out!"
               }
             ]
           }
@@ -31,13 +31,13 @@
       },
       {
         "object": "block",
-        "type": "paragraph",
+        "type": "heading-six",
         "nodes": [
           {
             "object": "text",
             "leaves": [
               {
-                "text": "Order when you start a line with \"## \" you get a level-two heading, like this:"
+                "text": "Built-in auto Markdown formatting for:"
               }
             ]
           }
@@ -45,13 +45,62 @@
       },
       {
         "object": "block",
-        "type": "heading-two",
+        "type": "unordered-list",
+        "nodes": [
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Headings"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Blockquotes"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Bulleted lists"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "object": "block",
+        "type": "heading-six",
         "nodes": [
           {
             "object": "text",
             "leaves": [
               {
-                "text": "Try it out!"
+                "text": "And full rich text editor support for:"
               }
             ]
           }
@@ -59,13 +108,117 @@
       },
       {
         "object": "block",
-        "type": "paragraph",
+        "type": "unordered-list",
         "nodes": [
           {
-            "object": "text",
-            "leaves": [
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
               {
-                "text": "Try it out for yourself! Try starting a new line with \">\", \"-\", or \"#\"s."
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Headings"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Blockquotes"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Bold"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Italic"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Underline"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Code"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Blockquote"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "block",
+            "type": "list-item",
+            "nodes": [
+              {
+                "object": "text",
+                "leaves": [
+                  {
+                    "text": "Bulleted lists"
+                  }
+                ]
               }
             ]
           }
