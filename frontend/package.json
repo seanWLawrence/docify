@@ -12,10 +12,12 @@
   "author": "Sean W. Lawrence <sean.w.lawrence@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "Dante2": "^0.5.0-rc4",
+    "immutable": "^4.0.0-rc.12",
     "prismjs": "^1.15.0",
     "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "slate": "^0.44.9",
+    "slate-react": "^0.21.15"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",

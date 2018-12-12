@@ -1,6 +1,8 @@
-<h1>Editing Document</h1>
 
-<%= render 'form', document: @document %>
+<%# <%= render 'form', document: @document %>
+<main id="root"></main>
 
 <%= link_to 'Show', @document %>
 <%= link_to 'Back', documents_path %>
+
+<%= javascript_include_tag 'editor' %>
