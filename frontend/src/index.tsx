@@ -2,10 +2,16 @@ import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
 import { Editor as Slate } from 'slate-react';
 import { Value } from 'slate';
+import { isKeyHotkey } from 'is-hotkey';
 
 import initialValueAsJson from './demo.json';
 
 let initialValue = Value.fromJSON(initialValueAsJson);
+
+let isBoldHotkey = isKeyHotkey('mod+b');
+let isItalicHotkey = isKeyHotkey('mod+i');
+let isUnderlinedHotkey = isKeyHotkey('mod+u');
+let isCodeHotkey = isKeyHotkey('mod+`');
 
 let debounce = (fn, time) => {
   let timeout;
@@ -30,22 +36,37 @@ let getBlockTypeFromCharacters = characters => {
     case '-':
     case '+':
       return 'list-item';
+
     case '>':
       return 'block-quote';
+
     case '#':
       return 'heading-one';
+
     case '##':
       return 'heading-two';
+
     case '###':
       return 'heading-three';
+
     case '####':
       return 'heading-four';
+
     case '#####':
       return 'heading-five';
+
     case '######':
       return 'heading-six';
+
     case '---':
       return 'horizontal-rule';
+
+    // case '`':
+    //   return 'code-inline';
+
+    // case '```':
+    //   return 'code-block';
+
     default:
       return null;
   }
@@ -69,22 +90,31 @@ let renderHTMLElement = (props, _editor, next) => {
   switch (type) {
     case 'block-quote':
       return <blockquote {...attributes}>{children}</blockquote>;
+
     case 'bulleted-list':
       return <ul {...attributes}>{children}</ul>;
+
     case 'heading-one':
       return <h1 {...attributes}>{children}</h1>;
+
     case 'heading-two':
       return <h2 {...attributes}>{children}</h2>;
+
     case 'heading-three':
       return <h3 {...attributes}>{children}</h3>;
+
     case 'heading-four':
       return <h4 {...attributes}>{children}</h4>;
+
     case 'heading-five':
       return <h5 {...attributes}>{children}</h5>;
+
     case 'heading-six':
       return <h6 {...attributes}>{children}</h6>;
+
     case 'list-item':
       return <li {...attributes}>{children}</li>;
+
     case 'horizontal-rule':
       return (
         <div
@@ -99,15 +129,20 @@ let renderHTMLElement = (props, _editor, next) => {
           {children}
         </div>
       );
+
     default:
       return next();
   }
 };
 
 let renderHTMLElementStyle = (props, _editor, next) => {
-  let { children, mark, attributes } = props;
+  let {
+    children,
+    mark: { type },
+    attributes,
+  } = props;
 
-  switch (mark.type) {
+  switch (type) {
     case 'bold':
       return <strong {...attributes}>{children}</strong>;
 
@@ -145,6 +180,28 @@ let onKeyDown = (event, editor, next) => {
     case 'Enter':
       return onEnter(event, editor, next);
 
+    case '`':
+      return onMark(event, editor, next);
+
+    default:
+      return next();
+  }
+};
+
+let onMark = (event, editor, next) => {
+  let { addMark } = editor;
+
+  event.preventDefault();
+
+  switch (event.key) {
+    case '`':
+      addMark('code');
+      break;
+
+    case '_':
+      addMark('italic');
+      break;
+
     default:
       return next();
   }
@@ -176,6 +233,7 @@ let onSpace = (event, editor, next) => {
   if (!type) return next();
 
   if (type == 'list-item' && startBlock.type == 'list-item') return next();
+  if (type == 'code' && startBlock.type == 'code') return next();
 
   event.preventDefault();
 
@@ -183,6 +241,10 @@ let onSpace = (event, editor, next) => {
 
   if (type == 'list-item') {
     wrapBlock('bulleted-list');
+  }
+
+  if (type == 'code') {
+    wrapBlock('code');
   }
 
   moveFocusToStartOfNode(startBlock).delete();
@@ -251,8 +313,8 @@ let onEnter = (event, editor, next) => {
     startBlock.type != 'heading-four' &&
     startBlock.type != 'heading-five' &&
     startBlock.type != 'heading-six' &&
-    startBlock.type != 'block-quote' &&
-    startBlock.type != 'horizontal-rule'
+    startBlock.type != 'block-quote'
+    // startBlock.type != 'horizontal-rule'
   ) {
     return next();
   }
@@ -262,15 +324,185 @@ let onEnter = (event, editor, next) => {
   splitBlock().setBlocks('paragraph');
 };
 
-class Editor extends PureComponent {
-  render() {
+interface State {
+  value: JSON;
+}
+
+class Editor extends PureComponent<{}, State> {
+  editor: Slate;
+
+  state = {
+    value: initialValue,
+  };
+  /**
+   * Check if the current selection has a mark with `type` in it.
+   *
+   * @param {String} type
+   * @return {Boolean}
+   */
+
+  hasMark = type => {
+    const { value } = this.state;
+    return value.activeMarks.some(mark => mark.type == type);
+  };
+
+  /**
+   * Check if the any of the currently selected blocks are of `type`.
+   *
+   * @param {String} type
+   * @return {Boolean}
+   */
+
+  hasBlock = type => {
+    const { value } = this.state;
+    return value.blocks.some(node => node.type == type);
+  };
+
+  /**
+   * Store a reference to the `editor`.
+   */
+
+  ref = editor => {
+    this.editor = editor;
+  };
+
+  onChange = ({ value }) => this.setState({ value });
+
+  /**
+   * When a mark button is clicked, toggle the current mark.
+   *
+   * @param {Event} event
+   * @param {String} type
+   */
+
+  onClickMark = ({ event, type }) => {
+    event.preventDefault();
+    this.editor.toggleMark(type);
+  };
+
+  /**
+   * When a block button is clicked, toggle the block type.
+   *
+   * @param {Event} event
+   * @param {String} type
+   */
+
+  onClickBlock = (event, type) => {
+    event.preventDefault();
+
+    let { editor } = this;
+    let { value } = editor;
+    let { document } = value;
+
+    // Handle everything but list buttons.
+    if (type != 'bulleted-list' && type != 'numbered-list') {
+      let isActive = this.hasBlock(type);
+      let isList = this.hasBlock('list-item');
+
+      if (isList) {
+        editor
+          .setBlocks(isActive ? 'paragraph' : type)
+          .unwrapBlock('bulleted-list')
+          .unwrapBlock('numbered-list');
+      } else {
+        editor.setBlocks(isActive ? 'paragraph' : type);
+      }
+    } else {
+      // Handle the extra wrapping required for list buttons.
+      let isList = this.hasBlock('list-item');
+      let isType = value.blocks.some(block => {
+        return !!document.getClosest(block.key, parent => parent.type == type);
+      });
+
+      if (isList && isType) {
+        editor
+          .setBlocks('paragraph')
+          .unwrapBlock('bulleted-list')
+          .unwrapBlock('numbered-list');
+      } else if (isList) {
+        editor
+          .unwrapBlock(
+            type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
+          )
+          .wrapBlock(type);
+      } else {
+        editor.setBlocks('list-item').wrapBlock(type);
+      }
+    }
+  };
+
+  renderMarkButton = ({ type, icon }) => {
+    let isActive = this.hasMark(type);
+
     return (
-      <Slate
-        defaultValue={initialValue}
-        onKeyDown={onKeyDown}
-        renderNode={renderHTMLElement}
-        renderMark={renderHTMLElementStyle}
-      />
+      <button onMouseDown={event => this.onClickMark({ event, type })}>
+        <span>{icon}</span>
+      </button>
+    );
+  };
+
+  renderBlockButton = ({ type, icon }) => {
+    let isActive = this.hasBlock(type);
+
+    if (['numbered-list', 'bulleted-list'].includes(type)) {
+      const {
+        value: { document, blocks },
+      } = this.state;
+
+      if (blocks.size > 0) {
+        const parent = document.getParent(blocks.first().key);
+        isActive = this.hasBlock('list-item') && parent && parent.type === type;
+      }
+    }
+
+    return (
+      <button onMouseDown={event => this.onClickBlock(event, type)}>
+        <span>{icon}</span>
+      </button>
+    );
+  };
+
+  render() {
+    let { value } = this.state;
+
+    return (
+      <div>
+        <div>
+          {this.renderMarkButton({ type: 'bold', icon: 'format_bold' })}
+          {this.renderMarkButton({ type: 'italic', icon: 'format_italic' })}
+          {this.renderMarkButton({
+            type: 'underlined',
+            icon: 'format_underlined',
+          })}
+          {this.renderMarkButton({ type: 'code', icon: 'code' })}
+          {this.renderBlockButton({ type: 'heading-one', icon: 'looks_one' })}
+          {this.renderBlockButton({ type: 'heading-two', icon: 'looks_two' })}
+          {this.renderBlockButton({
+            type: 'block-quote',
+            icon: 'format_quote',
+          })}
+          {this.renderBlockButton({
+            type: 'numbered-list',
+            icon: 'format_list_numbered',
+          })}
+          {this.renderBlockButton({
+            type: 'bulleted-list',
+            icon: 'format_list_bulleted',
+          })}
+        </div>
+
+        <Slate
+          autofocus
+          spellcheck
+          defaultValue={initialValue}
+          onKeyDown={onKeyDown}
+          renderNode={renderHTMLElement}
+          renderMark={renderHTMLElementStyle}
+          onChange={this.onChange}
+          value={value}
+          ref={this.ref}
+        />
+      </div>
     );
   }
 }
