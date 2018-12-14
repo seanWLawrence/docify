@@ -60,3 +60,6 @@ gem 'bcrypt'
 gem 'cancancan', '~> 2.0'
 
 gem 'jquery-rails'
+
+# Use postgres as the production database for Active Record
+gem 'pg'
