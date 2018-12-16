@@ -61,3 +61,6 @@ gem 'jquery-rails'
 
 # Use postgres as the database for Active Record
 gem 'pg'
+
+# user authentication
+gem 'devise'

@@ -1,13 +1,22 @@
 Rails.application.routes.draw do
-  resources :documents
   root "static_pages#index"
 
-  resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :documents
 
-  get "signup", to: "users#new", as: "signup"
-  get "login", to: "sessions#new", as: "login"
-  get "logout", to: "sessions#destroy", as: "logout"
+  resources :users, only: [:create]
+
+  devise_scope :user do
+    get "login", to: "users/sessions#new"
+    get "logout", to: "users/sessions#destroy"
+    get "signup", to: "users/registrations#new"
+  end
+
+  get "users/login", redirect_to: "/login"
+
+  devise_for :users, controllers: {
+                       sessions: "users/sessions",
+                       registrations: "users/registrations",
+                     }
 
   get "/about" => "static_pages#about"
 end

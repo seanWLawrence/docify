@@ -14,9 +14,12 @@
     <%= form.label :title %>
     <%= form.text_field :title, id: :document_title %>
 
+    <%= form.label :body %>
+    <%= form.text_field :body, id: :document_body %>
+
     <%= form.label :private %>
     <%= form.check_box :private, id: :document_private %>
 
-    <%= hidden_field_tag(:user_id, current_user.id) %>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
     <%= form.submit %>
 <% end %>
