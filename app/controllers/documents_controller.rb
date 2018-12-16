@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_document, only: [:show, :edit, :update, :destroy]
 
   # authorization loader
@@ -7,7 +8,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    if current_user != nil
+    if user_signed_in?
       @documents = Document.all.where(user_id: current_user.id)
     else
       @documents = []
