@@ -51,12 +51,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# encryption for passwords
-gem 'bcrypt'
-
-# authorization
-gem 'cancancan', '~> 2.0'
-
 gem 'jquery-rails'
 
 # Use postgres as the database for Active Record

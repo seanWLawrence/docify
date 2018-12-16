@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  skip_authorization_check
-
   # POST /users
   # POST /users.json
   def create
