@@ -62,7 +62,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "docify-v2_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.defaultUrl_options = {
+  config.action_mailer.default_url_options = {
     host: "docify-beta.herokuapp.com",
     port: 3000,
   }
