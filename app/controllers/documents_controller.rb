@@ -2,10 +2,6 @@ class DocumentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_document, only: [:show, :edit, :update, :destroy]
 
-  # authorization loader
-  # load_and_authorize_resource
-  skip_authorization_check
-
   # GET /documents
   # GET /documents.json
   def index
