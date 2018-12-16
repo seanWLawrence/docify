@@ -6,12 +6,16 @@ class Ability
     # Handle the case where we don't have a current_user i.e. the user is a guest
     user ||= User.new
 
-    can :read, Document, private: false
+    can :manage, Document
 
-    can [:create, :new], User
+    can :manage, User
 
-    if user.present?
-      can :manage, Document, user_id: user.id
-    end
+    # can :read, Document, private: false
+
+    # can [:create, :new], User
+
+    # if user.present?
+    #   can :manage, Document, user_id: user.id
+    # end
   end
 end
