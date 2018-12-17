@@ -1,0 +1,34 @@
+{
+  "document": {
+    "nodes": [
+      {
+        "object": "block",
+        "type": "heading-one",
+        "nodes": [
+          {
+            "object": "text",
+            "leaves": [
+              {
+                "text": "Create beautiful documents"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "block",
+        "type": "block-quote",
+        "nodes": [
+          {
+            "object": "text",
+            "leaves": [
+              {
+                "text": "This entire page is fully editable - try it out!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

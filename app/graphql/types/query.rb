@@ -23,12 +23,12 @@ class Types::Query < Types::Base
   field :viewer, Types::User, null: true
 
   def document(id:)
-    Document.find(id)
+    ::Document.find(id)
   end
 
   def documents(user_id:)
     if user_id != nil
-      Document.all.where(user_id: user_id)
+      ::Document.all.where(user_id: user_id)
     else Document.all     end
   end
 

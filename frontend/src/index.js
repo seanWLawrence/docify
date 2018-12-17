@@ -1,24 +1,22 @@
 import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
-import { Editor as Slate, Commands } from 'slate-react';
+import { QueryRenderer } from 'react-relay';
+import { Editor as Slate } from 'slate-react';
 import { Value } from 'slate';
 
 import Button from './components/Button';
 import Toolbar from './components/Toolbar';
-import renderNode from './slate-types/block';
-import renderMark from './slate-types/inline';
-import { onKeyDown } from './utils';
+import renderNode from '../lib/slate-types/block';
+import renderMark from '../lib/slate-types/inline';
+import environment from '../lib/relay-environment';
+import { onKeyDown } from '../lib/utils';
+import viewerQuery from './queries/viewer';
 
-import initialValueAsJson from './demo.json';
-import { SlateEditor } from './index.d';
+import initialValueAsJson from '../assets/demo.json';
+
 let initialValue = Value.fromJSON(initialValueAsJson);
 
-interface State {
-  value: Value;
-}
-class Editor extends PureComponent<{}, State> {
-  editor: Commands;
-
+class Editor extends PureComponent {
   state = {
     value: initialValue,
   };
@@ -27,7 +25,7 @@ class Editor extends PureComponent<{}, State> {
    *
    */
 
-  hasMark = (type: string): boolean => {
+  hasMark = type => {
     const { value } = this.state;
     return value.activeMarks.some(mark => mark.type == type);
   };
@@ -37,7 +35,7 @@ class Editor extends PureComponent<{}, State> {
    *
    */
 
-  hasBlock = (type: string): boolean => {
+  hasBlock = type => {
     const { value } = this.state;
     return value.blocks.some(node => node.type == type);
   };
@@ -46,23 +44,17 @@ class Editor extends PureComponent<{}, State> {
    * Store a reference to the `editor`.
    */
 
-  ref = (editor: SlateEditor) => {
+  ref = editor => {
     this.editor = editor;
   };
 
-  onChange = ({ value }: { value: Value }) => this.setState({ value });
+  onChange = ({ value }) => this.setState({ value });
 
   /**
    * When a mark button is clicked, toggle the current mark.
    */
 
-  onClickMark = ({
-    event,
-    type,
-  }: {
-    event: React.MouseEvent<HTMLButtonElement>;
-    type: string;
-  }): void => {
+  onClickMark = ({ event, type }) => {
     event.preventDefault();
     this.editor.toggleMark(type);
   };
@@ -71,13 +63,7 @@ class Editor extends PureComponent<{}, State> {
    * When a block button is clicked, toggle the block type.
    */
 
-  onClickBlock = ({
-    event,
-    type,
-  }: {
-    event: React.MouseEvent<HTMLButtonElement>;
-    type: string;
-  }): void => {
+  onClickBlock = ({ event, type }) => {
     event.preventDefault();
 
     let { editor } = this;
@@ -121,13 +107,7 @@ class Editor extends PureComponent<{}, State> {
     }
   };
 
-  renderMarkButton = ({
-    type,
-    icon,
-  }: {
-    type: string;
-    icon: string;
-  }): React.ReactNode => {
+  renderMarkButton = ({ type, icon }) => {
     let isActive = this.hasMark(type);
 
     return (
@@ -138,13 +118,7 @@ class Editor extends PureComponent<{}, State> {
     );
   };
 
-  renderBlockButton = ({
-    type,
-    icon,
-  }: {
-    type: string;
-    icon: string;
-  }): React.ReactNode => {
+  renderBlockButton = ({ type, icon }) => {
     let isActive = this.hasBlock(type);
 
     if (['numbered-list', 'bulleted-list'].includes(type)) {
@@ -191,6 +165,25 @@ class Editor extends PureComponent<{}, State> {
           })}
         </Toolbar>
 
+        <QueryRenderer
+          environment={environment}
+          query={viewerQuery}
+          variables={{}}
+          render={({ error, props }) => {
+            if (error) {
+              return <div>Error!</div>;
+            }
+            if (!props) {
+              return <div>Loading...</div>;
+            }
+
+            return (
+              <div>
+                {props.viewer.email} {props.viewer.id}
+              </div>
+            );
+          }}
+        />
         <Slate
           autofocus
           spellcheck

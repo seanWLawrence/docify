@@ -1,8 +1,7 @@
-import { SlateProps, SlateEditor, SlateNext } from './index.d';
 /**
  * Get the block type for a series of auto-markdown shortcut `characters`.
  */
-export let getBlockTypeFromCharacters = (characters: string): string | null => {
+export let getBlockTypeFromCharacters = (characters) => {
   switch (characters) {
     case '*':
     case '-':
@@ -49,10 +48,10 @@ export let getBlockTypeFromCharacters = (characters: string): string | null => {
  */
 
 export let onKeyDown = (
-  event: KeyboardEvent,
-  editor: SlateEditor,
-  next: SlateNext
-): void => {
+  event,
+  editor,
+  next,
+) => {
   switch (event.key) {
     case ' ':
       return onSpace(event, editor, next);
@@ -72,10 +71,10 @@ export let onKeyDown = (
 };
 
 export let onMark = (
-  event: KeyboardEvent,
-  editor: SlateEditor,
-  next: SlateNext
-): void => {
+  event,
+  editor,
+  next
+) => {
   let { addMark } = editor;
 
   event.preventDefault();
@@ -100,10 +99,10 @@ export let onMark = (
  */
 
 export let onSpace = (
-  event: KeyboardEvent,
-  editor: SlateEditor,
-  next: SlateNext
-): void => {
+  event,
+  editor,
+  next
+) => {
   let { value, setBlocks, wrapBlock, moveFocusToStartOfNode } = editor;
 
   let {
@@ -143,10 +142,10 @@ export let onSpace = (
  */
 
 export let onBackspace = (
-  event: KeyboardEvent,
-  editor: SlateEditor,
-  next: SlateNext
-): void => {
+  event,
+  editor,
+  next
+) => {
   let { value, unwrapBlock, setBlocks } = editor;
 
   let {
@@ -175,10 +174,10 @@ export let onBackspace = (
  */
 
 export let onEnter = (
-  event: KeyboardEvent,
-  editor: SlateEditor,
-  next: SlateNext
-): void => {
+  event,
+  editor,
+  next
+) => {
   let { value, splitBlock } = editor;
 
   let {

@@ -1,4 +1,4 @@
-class DocifyV2Schema < GraphQL::Schema
+class DocifySchema < GraphQL::Schema
   query Types::Query
 
   # GraphQL::Batch setup:

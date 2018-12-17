@@ -1,10 +1,6 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 
-interface Props {
-  children: React.ReactNodeArray
-}
-
-let styles: CSSProperties = {
+let styles = {
   display: 'flex',
   flexDirection: 'column',
   width: 'max-content',
@@ -18,7 +14,7 @@ let styles: CSSProperties = {
   zIndex: 2,
 }
 
-let Toolbar = ({ children }: Props) => (
+let Toolbar = ({ children }) => (
   <div
     style={styles}
   >
