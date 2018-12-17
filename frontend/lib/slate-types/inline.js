@@ -1,7 +1,6 @@
 import React from 'react';
-import { SlateProps, SlateEditor, SlateNext } from '../index.d'
 
-let inline = (props: SlateProps, _editor: SlateEditor, next: SlateNext): React.ReactNode | void => {
+let inline = (props, _editor, next) => {
   let {
     children,
     mark: { type },

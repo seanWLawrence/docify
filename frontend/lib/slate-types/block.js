@@ -1,10 +1,9 @@
 import React from 'react'
-import {SlateProps, SlateEditor, SlateNext} from '../index.d'
 
 /**
  * Render an HTML element (aka Slate node)
  */
-let blockTypes = (props: SlateProps, _editor: SlateEditor, next: SlateNext): React.ReactNode | void => {
+let blockTypes = (props, _editor, next) => {
   let {
     attributes,
     children,

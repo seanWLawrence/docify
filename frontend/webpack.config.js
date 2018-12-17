@@ -5,31 +5,29 @@ let isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
-  entry: './src/index.tsx',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, '../app/assets/javascripts/editor'),
     chunkFilename: '[name].[contentHash].bundle.js',
-    filename: isDev ? 'index.js' : '[name].[contenthash].js',
-  },
-  resolve: {
-    extensions: ['.wasm', '.mjs', '.js', '.json', '.ts', '.tsx'],
+    filename: 'index.js',
   },
   module: {
     rules: [
       {
-        test: /\.ts?x$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-typescript',
-              '@babel/preset-react',
-            ],
             plugins: [
+              ['relay', { artifactDirectory: './src/__generated__' }],
               '@babel/plugin-proposal-class-properties',
               '@babel/plugin-syntax-dynamic-import',
+              '@babel/plugin-transform-runtime',
+            ],
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
             ],
           },
         },

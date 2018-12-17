@@ -1,11 +1,6 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
-interface Props {
-  text: string;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-let styles: CSSProperties = {
+let styles = {
   border: 0,
   padding: '10px 15px',
   maxWidth: 'max-content',
@@ -15,7 +10,7 @@ let styles: CSSProperties = {
   backgroundColor: 'rgba(240, 240, 240, 1)'
 }
 
-let Button = ({ text, onClick }: Props) => (
+let Button = ({ text, onClick }) => (
   <button
     onClick={onClick}
     style={styles}
