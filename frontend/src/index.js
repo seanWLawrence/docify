@@ -10,8 +10,7 @@ import renderNode from '../lib/slate-types/block';
 import renderMark from '../lib/slate-types/inline';
 import environment from '../lib/relay-environment';
 import { onKeyDown } from '../lib/utils';
-import documentQuery from './queries/document';
-import documentMutation from './mutations/document';
+import viewerQuery from './queries/viewer';
 
 import initialValueAsJson from '../assets/demo.json';
 
@@ -168,7 +167,7 @@ class Editor extends PureComponent {
 
         <QueryRenderer
           environment={environment}
-          query={documentQuery}
+          query={viewerQuery}
           variables={{}}
           render={({ error, props }) => {
             if (error) {
@@ -178,13 +177,9 @@ class Editor extends PureComponent {
               return <div>Loading...</div>;
             }
 
-            console.log(props);
-
             return (
               <div>
-                {props.viewer.documents.map(document => (
-                  <p>{document.title}</p>
-                ))}
+                {props.viewer.email} {props.viewer.id}
               </div>
             );
           }}

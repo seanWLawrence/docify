@@ -1,12 +1,10 @@
 import { graphql } from 'react-relay';
 
 export default graphql`
-  query documentQuery {
+  query viewerQuery {
     viewer {
-      documents {
-        title
-        body
-      }
+      id
+      email
     }
   }
 `;
