@@ -1,6 +1,6 @@
-import { graphql } from 'react-relay';
+import gql from 'graphql-tag';
 
-export default graphql`
+export default gql`
   query documentQuery {
     viewer {
       documents {
@@ -10,4 +10,3 @@ export default graphql`
     }
   }
 `;
-

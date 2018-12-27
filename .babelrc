@@ -1,0 +1,5 @@
+// used for mocha test setup only
+// see babel.config.js for development and production babel config
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}

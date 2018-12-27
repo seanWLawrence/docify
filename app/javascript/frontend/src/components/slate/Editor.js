@@ -1,23 +1,21 @@
 import React, { PureComponent } from 'react';
-import { render } from 'react-dom';
-import { QueryRenderer } from 'react-relay';
+
 import { Editor as Slate } from 'slate-react';
 import { Value } from 'slate';
+import { Query } from 'react-apollo';
 
-import Button from './components/Button';
-import Toolbar from './components/Toolbar';
-import renderNode from '../lib/slate-types/block';
-import renderMark from '../lib/slate-types/inline';
-import environment from '../lib/relay-environment';
-import { onKeyDown } from '../lib/utils';
-import documentQuery from './queries/document';
-import documentMutation from './mutations/document';
+import Button from '../Button';
+import Toolbar from '../Toolbar';
+import renderNode from './block-types';
+import renderMark from './inline-types';
+import { onKeyDown } from './utils';
+import documentQuery from '../../queries/document';
 
-import initialValueAsJson from '../assets/demo.json';
+import initialValueAsJson from '../../assets/demo.json';
 
 let initialValue = Value.fromJSON(initialValueAsJson);
 
-class Editor extends PureComponent {
+export default class Editor extends PureComponent {
   state = {
     value: initialValue,
   };
@@ -166,29 +164,6 @@ class Editor extends PureComponent {
           })}
         </Toolbar>
 
-        <QueryRenderer
-          environment={environment}
-          query={documentQuery}
-          variables={{}}
-          render={({ error, props }) => {
-            if (error) {
-              return <div>Error!</div>;
-            }
-            if (!props) {
-              return <div>Loading...</div>;
-            }
-
-            console.log(props);
-
-            return (
-              <div>
-                {props.viewer.documents.map(document => (
-                  <p>{document.title}</p>
-                ))}
-              </div>
-            );
-          }}
-        />
         <Slate
           autofocus
           spellcheck
@@ -204,7 +179,3 @@ class Editor extends PureComponent {
     );
   }
 }
-
-let root = document.getElementById('root');
-
-render(<Editor />, root);

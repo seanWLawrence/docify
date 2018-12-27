@@ -1,0 +1,6 @@
+# es6 syntax
+--require @babel/register
+--require @babel/polyfill
+
+# location of tests
+app/javascript/frontend/src/test

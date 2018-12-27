@@ -63,3 +63,5 @@ gem 'devise'
 gem 'graphql'
 gem 'graphiql-rails', group: :development
 gem 'graphql-batch'
+
+gem 'webpacker', '>= 4.0.x'
