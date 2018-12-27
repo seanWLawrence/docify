@@ -1,5 +1,5 @@
 class Mutations::UpdateDocumentTitle < Mutations::Base
-  argument :document_id, ID, required: true, loads: Types::Document
+  argument :document_id, ID, required: true
   argument :title, String, required: true
 
   field :document, Types::Document, null: false
@@ -12,13 +12,11 @@ class Mutations::UpdateDocumentTitle < Mutations::Base
     if document.save
       {
         document: document,
-        documents: ::Document.all.where(user_id: current_user.id),
         errors: [],
       }
     else
       {
         document: nil,
-        documents: nil,
         errors: document.errors.full_messages,
       }
     end

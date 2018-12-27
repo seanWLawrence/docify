@@ -1,13 +1,13 @@
 class Mutations::UpdateDocumentPrivate < Mutations::Base
-  argument :document_id, ID, required: true, loads: Types::Document
-  argument :private, Boolean, required: true
+  argument :document_id, ID, required: true
+  argument :is_private, Boolean, required: true
 
   field :document, Types::Document, null: false
   field :errors, [String], null: false
 
-  def resolve(document_id:, private:)
+  def resolve(document_id:, is_private:)
     document = ::Document.find(document_id).where(user_id: current_user.id)
-    document.build(private: private)
+    document.build(is_private: is_private)
 
     if document.save
       {

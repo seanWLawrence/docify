@@ -1,5 +1,5 @@
 class Mutations::UpdateDocumentBody < Mutations::Base
-  argument :document_id, ID, required: true, loads: Types::Document
+  argument :document_id, ID, required: true
   argument :body, String, required: true
 
   field :document, Types::Document, null: false
