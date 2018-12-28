@@ -4,9 +4,15 @@ import { hot } from 'react-hot-loader/root';
 import Editor from '../../components/Editor';
 import htmlSerializer from '../../components/Editor/htmlSerializer';
 import demoContent from '../../components/Editor/_fixture';
+import styles from './Demo.module.scss';
 
 let Demo = () => (
-  <Editor initialValue={htmlSerializer.deserialize(demoContent)} />
+  <div className={styles.Demo__Container}>
+    <Editor
+      initialValue={htmlSerializer.deserialize(demoContent)}
+      className={styles.Base}
+    />
+  </div>
 );
 
 export default hot(Demo);

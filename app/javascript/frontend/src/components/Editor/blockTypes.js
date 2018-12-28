@@ -38,6 +38,9 @@ export default function blockTypes(props, _editor, next) {
     case 'list-item':
       return <li {...attributes}>{children}</li>;
 
+    case 'paragraph':
+      return <p {...attributes}>{children}</p>;
+
     default:
       return next();
   }

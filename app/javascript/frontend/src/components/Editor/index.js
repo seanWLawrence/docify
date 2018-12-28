@@ -112,9 +112,10 @@ export default class Editor extends Component {
     return (
       <Button
         onClick={event => this.onClickMark({ event, type })}
-        text={icon}
         isActive={isActive}
-      />
+      >
+        {icon}
+      </Button>
     );
   };
 
@@ -135,9 +136,10 @@ export default class Editor extends Component {
     return (
       <Button
         onClick={event => this.onClickBlock({ event, type })}
-        text={icon}
         isActive={isActive}
-      />
+      >
+        {icon}
+      </Button>
     );
   };
 

@@ -1,4 +1,4 @@
-@import './variables', './media_queries';
+@import './variables', './media_queries', './rythmn';
 
 @mixin heading($font-size) {
   color: $color-dark;
@@ -15,24 +15,28 @@
   @include mobile {
     #{$heading} {
       @include heading($font-size * 0.4);
+      @include vertical-rythmn(5);
     }
   }
 
   @include tablet {
     #{$heading} {
       @include heading($font-size * 0.55);
+      @include vertical-rythmn(5);
     }
   }
 
   @include desktop {
     #{$heading} {
       @include heading($font-size * 0.75);
+      @include vertical-rythmn(5);
     }
   }
 
   @include retina {
     #{$heading} {
       @include heading($font-size);
+      @include vertical-rythmn(5);
     }
   }
 }
