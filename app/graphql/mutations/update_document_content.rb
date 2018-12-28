@@ -1,24 +1,25 @@
-class Mutations::UpdateDocumentBody < Mutations::Base
+class Mutations::UpdateDocumentContent < Mutations::Base
   argument :document_id, ID, required: true
-  argument :body, String, required: true
+  argument :content, String, required: true
 
   field :document, Types::Document, null: false
   field :errors, [String], null: false
 
-  def resolve(document_id:, body:)
-    document = ::Document.find(document_id).where(user_id: current_user.id)
-    document.build(body: body)
+  def resolve(document_id:, content:)
+
+    document = User.find(current_user.id).documents.find(document_id)
+    html_sanitizer = Rails::Html::WhiteListSanitizer.new
+
+    document.update(content: html_sanitizer.sanitize(content))
 
     if document.save
       {
         document: document,
-        documents: ::Document.all.where(user_id: current_user.id),
         errors: [],
       }
     else
       {
         document: nil,
-        documents: nil,
         errors: document.errors.full_messages,
       }
     end

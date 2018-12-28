@@ -1,3 +1,4 @@
+import React from 'react';
 import Html from 'slate-html-serializer';
 
 const BLOCK_TYPES = {
@@ -67,6 +68,9 @@ let rules = [
 
           case 'list-item':
             return <li>{children}</li>;
+
+          case 'paragraph':
+            return <p>{children}</p>;
         }
       }
     },

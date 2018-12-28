@@ -1,3 +1,5 @@
+import getBlockTypeFromCharacters from './getBlockTypeFromCharacters';
+
 /**
  * On space, if it was after an auto-markdown shortcut, convert the current
  * node into the shortcut's corresponding type.

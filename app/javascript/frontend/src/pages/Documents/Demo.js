@@ -3,7 +3,7 @@ import { hot } from 'react-hot-loader/root';
 
 import Editor from '../../components/Editor';
 import htmlSerializer from '../../components/Editor/htmlSerializer';
-import demoContent from '../../components/Editor/_fixture';
+import demoContent from '../../components/Editor/_demoFixture';
 import styles from './Demo.module.scss';
 
 let Demo = () => (

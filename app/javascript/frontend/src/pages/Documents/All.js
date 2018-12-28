@@ -1,13 +1,37 @@
 import React from 'react';
-import { Link } from '@reach/router';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
+import { Link, navigate } from '@reach/router';
 
 import viewerDocuments from '../../queries/viewerDocuments';
+import createDocument from '../../mutations/createDocument';
 import styles from './All.module.scss';
 
 let CreateDocumentButton = () => (
-  <Link to="/documents/new" className={styles['Documents__Button--CreateNew']}>
-    +
+  <Mutation mutation={createDocument}>
+    {(createDocumentMutation, { data }) => {
+      if (data) {
+        let { id } = data.createDocument.document;
+
+        navigate(`/documents/edit/${id}`);
+      }
+      return (
+        <button
+          className={styles['Documents__Button--CreateNew']}
+          onClick={createDocumentMutation}
+        >
+          +
+        </button>
+      );
+    }}
+  </Mutation>
+);
+
+let Document = ({ id, content, updatedAt }) => (
+  <Link key={id} to={`/documents/edit/${id}`}>
+    <div className={styles.Document__Container}>
+      <div dangerouslySetInnerHTML={{ __html: content }} />
+      <p className={styles.Document__Date}>{updatedAt}</p>
+    </div>
   </Link>
 );
 
@@ -28,21 +52,19 @@ let Documents = () => (
         <div className={styles.Documents__Container}>
           <CreateDocumentButton />
           {documents.map(doc => {
-            let { id, title, updatedAt, body, isPrivate } = doc;
+            let { id, updatedAt, content } = doc;
 
             let formattedUpdatedAt = new Date(updatedAt).toLocaleDateString(
               'en-US'
             );
 
             return (
-              <Link key={id} to={`/documents/${id}`}>
-                <div className={styles.Document__Container}>
-                  <h2>{title}</h2>
-                  <p>{body}</p>
-                  <p className={styles.Document__Date}>{formattedUpdatedAt}</p>
-                  {isPrivate && <p>Private</p>}
-                </div>
-              </Link>
+              <Document
+                key={id}
+                id={id}
+                updatedAt={formattedUpdatedAt}
+                content={content}
+              />
             );
           })}
         </div>

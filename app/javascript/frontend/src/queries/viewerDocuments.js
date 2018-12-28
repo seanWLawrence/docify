@@ -5,8 +5,7 @@ export default gql`
     viewer {
       documents {
         id
-        title
-        body
+        content
         createdAt
         updatedAt
       }

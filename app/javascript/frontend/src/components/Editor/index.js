@@ -8,15 +8,12 @@ import Toolbar from '../Toolbar';
 import renderNode from './blockTypes';
 import renderMark from './inlineTypes';
 import onKeyDown from './onKeyDown';
+import htmlSerializer from '../../components/Editor/htmlSerializer';
+import defaultFixture from './_defaultFixture';
 
 export default class Editor extends Component {
   static propTypes = {
     data: PropTypes.shape({ body: PropTypes.string }),
-    isDemo: PropTypes.bool,
-  };
-
-  state = {
-    value: this.props.initialValue,
   };
 
   /**
@@ -25,7 +22,7 @@ export default class Editor extends Component {
    */
 
   hasMark = type => {
-    const { value } = this.state;
+    const { value } = this.props;
     return value.activeMarks.some(mark => mark.type == type);
   };
 
@@ -35,7 +32,7 @@ export default class Editor extends Component {
    */
 
   hasBlock = type => {
-    const { value } = this.state;
+    const { value } = this.props;
     return value.blocks.some(node => node.type == type);
   };
 
@@ -47,7 +44,7 @@ export default class Editor extends Component {
     this.editor = editor;
   };
 
-  onChange = ({ value }) => this.setState({ value });
+  onChange = ({ value }) => this.onChange({ value });
 
   /**
    * When a mark button is clicked, toggle the current mark.
@@ -125,7 +122,7 @@ export default class Editor extends Component {
     if (['numbered-list', 'bulleted-list'].includes(type)) {
       let {
         value: { document, blocks },
-      } = this.state;
+      } = this.props;
 
       if (blocks.size > 0) {
         let parent = document.getParent(blocks.first().key);
@@ -144,7 +141,7 @@ export default class Editor extends Component {
   };
 
   render() {
-    let { value } = this.state;
+    let { value, onChange } = this.props;
 
     return (
       <div>
@@ -169,15 +166,16 @@ export default class Editor extends Component {
         </Toolbar>
 
         <Slate
-          autofocus
-          spellcheck
-          defaultValue={this.props.initialValue}
+          autoFocus
+          autoCorrect
+          spellCheck
           onKeyDown={onKeyDown}
           renderNode={renderNode}
           renderMark={renderMark}
-          onChange={this.onChange}
+          onChange={onChange}
           value={value}
           ref={this.ref}
+          placeholder="Start writing here..."
         />
       </div>
     );
