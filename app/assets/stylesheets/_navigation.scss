@@ -1,0 +1,32 @@
+@import './mixins', './variables';
+
+nav {
+  @include flexbox(row, space-around, baseline);
+  list-style-type: none;
+  width: 100%;
+  max-width: 415px;
+  padding-top: 30px;
+
+  a {
+    text-decoration: none;
+    font-family: $font-family-body;
+    font-size: $font-size-body;
+    color: $color-medium;
+    border-bottom: 2px solid transparent;
+    margin: 15px;
+  }
+
+  a:hover {
+    border-bottom: 2px solid $color-primary;
+    transition: border-bottom ease-in-out 0.5s;
+  }
+
+  .logo {
+    font-size: 48px;
+    color: $color-dark;
+  }
+
+  &.logged-in {
+    max-width: 450px;
+  }
+}

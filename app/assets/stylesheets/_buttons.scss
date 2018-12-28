@@ -1,0 +1,36 @@
+@import './media_queries', './variables', './rythmn';
+
+.Button--Primary {
+  background-color: $color-primary;
+  color: $color-white;
+  font-size: $font-size-body;
+  border: 0;
+  outline-color: $color-primary;
+  border-bottom: $space solid $color-primary;
+  cursor: pointer;
+  max-width: max-content;
+
+  padding: 15px 30px 10px 30px;
+
+  &:hover,
+  &--IsActive {
+    transition: all ease-in 0.5s;
+    background: $color-light;
+    color: $color-medium;
+  }
+}
+
+.Button--Secondary {
+  @extend .Button--Primary;
+
+  background-color: $color-white;
+  color: $color-primary;
+  padding: 10px 25px 10px 25px;
+  border: $space solid $color-primary;
+
+  &:hover {
+    border: $space solid transparent;
+    border-bottom: $space solid $color-primary;
+    transition: border ease-in 0.5s;
+  }
+}
