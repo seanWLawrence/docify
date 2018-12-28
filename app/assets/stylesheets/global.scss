@@ -6,6 +6,34 @@
   }
 }
 
+.Button--Primary {
+  background-color: cornflowerblue;
+  color: #fff;
+  padding: 15px 30px 10px 30px;
+  font-size: 20px;
+  border: 0;
+  outline-color: cornflowerblue;
+  border-bottom: 5px solid cornflowerblue;
+  margin: 30px 0;
+  cursor: pointer;
+  max-width: max-content;
+
+  &:hover {
+    transition: all ease-in 0.5s;
+    background: rgba(245, 245, 245, 1);
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.Button--Secondary {
+  @extend .Button--Primary;
+
+  background-color: #fff;
+  color: cornflowerblue;
+  padding: 10px 25px 10px 25px;
+  border: 5px solid cornflowerblue;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -14,9 +42,9 @@ form {
   min-width: 300px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
+input[type='text'],
+input[type='email'],
+input[type='password'],
 textarea {
   width: 100%;
   max-width: 300px;
@@ -44,25 +72,10 @@ label {
 }
 
 input[type='submit'] {
-  background: cornflowerblue;
-  color: #fff;
-  padding: 15px 30px 10px 30px;
-  font-size: 20px;
-  border: 0;
-  outline-color: cornflowerblue;
-  border-bottom: 5px solid cornflowerblue;
-  margin: 30px 0;
-  cursor: pointer;
-  max-width: max-content;
-
-  &:hover {
-  transition: all ease-in 0.5s;
-  background: rgba(245, 245, 245, 1);
-  color: rgba(0, 0, 0, 0.7);
-  }
+  @extend .Button--Primary;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   margin-right: 15px;
 }
 

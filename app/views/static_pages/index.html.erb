@@ -1,3 +1,18 @@
-<main id="root"></main>
-
-<%= javascript_pack_tag 'index' %>
+<main id="home">
+  <div class="Home__Message">
+    <h1>
+      Create
+      <br />
+      Beautiful
+      <br />
+      Documents
+    </h1>
+    <p>Docify helps you focus on doing your best work with an easy-to-use, extremely flexible text editor and file management solution.</p>
+  </div>
+  <div class="Home__ButtonContainer">
+    <a href="/demo"><button class="Button--Secondary">Try demo</button></a>
+    <% if !current_user %>
+      <a href="/signup"><button class="Button--Primary">Sign up</button></a>
+    <% end %>
+  </div>
+</main>
