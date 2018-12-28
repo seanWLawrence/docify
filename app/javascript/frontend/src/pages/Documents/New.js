@@ -1,9 +1,7 @@
-import { hot } from 'react-hot-loader/root';
+import React from 'react';
 
 import Editor from '../../components/Editor';
-import withMutation from '../../hoc/withMutation';
-import createDocument from '../../mutations/createDocument';
 
-let withData = withMutation(Editor)(createDocument, {});
-
-export default hot(withData);
+export default function EditDocument() {
+  return <h1>hello</h1>;
+}

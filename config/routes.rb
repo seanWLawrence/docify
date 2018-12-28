@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: [:create]
 
   get 'demo', to: 'documents#demo'
+  get 'documents', to: 'documents#index'
 
   devise_scope :user do
     get "login", to: "users/sessions#new"

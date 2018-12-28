@@ -7,7 +7,6 @@ export default gql`
         id
         title
         body
-        isPrivate
         createdAt
         updatedAt
       }
