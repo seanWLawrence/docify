@@ -109,4 +109,10 @@ let rules = [
   },
 ];
 
-export default new Html({ rules });
+let htmlSerializer = new Html({ rules });
+
+export let formatContentForSlate = content =>
+  htmlSerializer.deserialize(content);
+
+export let formatContentFromSlate = content =>
+  htmlSerializer.serialize(content);

@@ -1,3 +1,4 @@
+import onBackspace from './onBackspace';
 /**
  * On return, if at the end of a node type that should not be extended,
  * create a new paragraph below it.

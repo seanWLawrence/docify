@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   get 'demo', to: 'documents#demo'
   get 'documents', to: 'documents#index'
-  get 'documents/new', to: 'documents#index'
+  get 'documents/edit/:id', to: 'documents#index'
 
   devise_scope :user do
     get "login", to: "users/sessions#new"

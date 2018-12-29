@@ -8,8 +8,6 @@ import Toolbar from '../Toolbar';
 import renderNode from './blockTypes';
 import renderMark from './inlineTypes';
 import onKeyDown from './onKeyDown';
-import htmlSerializer from '../../components/Editor/htmlSerializer';
-import defaultFixture from './_defaultFixture';
 
 export default class Editor extends Component {
   static propTypes = {

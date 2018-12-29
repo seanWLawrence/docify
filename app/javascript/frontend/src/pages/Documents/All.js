@@ -48,25 +48,31 @@ let Documents = () => (
 
       let { documents } = data.viewer;
 
+      let hasDocuments = documents.length > 0;
+
       return (
         <div className={styles.Documents__Container}>
           <CreateDocumentButton />
-          {documents.map(doc => {
-            let { id, updatedAt, content } = doc;
+          {hasDocuments ? (
+            documents.map(doc => {
+              let { id, updatedAt, content } = doc;
 
-            let formattedUpdatedAt = new Date(updatedAt).toLocaleDateString(
-              'en-US'
-            );
+              let formattedUpdatedAt = new Date(updatedAt).toLocaleDateString(
+                'en-US'
+              );
 
-            return (
-              <Document
-                key={id}
-                id={id}
-                updatedAt={formattedUpdatedAt}
-                content={content}
-              />
-            );
-          })}
+              return (
+                <Document
+                  key={id}
+                  id={id}
+                  updatedAt={formattedUpdatedAt}
+                  content={content}
+                />
+              );
+            })
+          ) : (
+            <p>Let's create some documents!</p>
+          )}
         </div>
       );
     }}
