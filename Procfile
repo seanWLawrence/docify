@@ -1,2 +1,2 @@
-web: bin/rails server -e production -p 3000
+web: bin/rails server -e $RAILS_ENV -p $PORT
 webpacker: NODE_ENV=production ./bin/webpack
