@@ -1,0 +1,13 @@
+.Base {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 1px 9px #ddd;
+  position: fixed;
+  right: 0;
+  background-color: #fff;
+  z-index: 2;
+}

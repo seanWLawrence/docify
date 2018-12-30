@@ -1,0 +1,11 @@
+@import './variables';
+
+@mixin vertical-rythmn($spaces) {
+  margin-top: $spaces * $space;
+  margin-bottom: $spaces * $space;
+}
+
+@mixin horizontal-rythmn($spaces) {
+  margin-left: $spaces * $space;
+  margin-right: $spaces * $space;
+}

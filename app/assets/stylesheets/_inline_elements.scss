@@ -1,0 +1,40 @@
+@import './variables', './body_text';
+
+@mixin a {
+  color: $color-primary;
+  text-decoration: none;
+  font-family: $font-family-header;
+
+  &:hover {
+    transition: color ease-in 0.25s;
+    color: lighten($color-primary, 10%);
+  }
+}
+
+@include mobile {
+  a {
+    @include body($font-size-body * 0.7);
+    @include a;
+  }
+}
+
+@include tablet {
+  a {
+    @include body($font-size-body * 0.8);
+    @include a;
+  }
+}
+
+@include desktop {
+  a {
+    @include body($font-size-body * 0.9);
+    @include a;
+  }
+}
+
+@include retina {
+  a {
+    @include body($font-size-body);
+    @include a;
+  }
+}

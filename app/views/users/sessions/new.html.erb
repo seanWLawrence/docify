@@ -1,7 +1,17 @@
-<main id="signin">
-  <div class="form-container">
-    <h1>Sign in</h1>
+<main id="login">
+  <div class="Login__Container">
+    <h1>Login</h1>
 
     <%= render 'users/sessions/form' %>
+
+    <div class="Login__SignupContainer">
+      <h4>Don't have an account yet?</h4>
+
+      <p>Start writing beautiful documents today, it's 100% free</p>
+
+      <a href="/signup" title="Signup" class="Login__SignupButton">
+        Sign up
+      </a>
+    </div>
   </div>
 </main>

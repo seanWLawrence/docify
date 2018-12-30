@@ -6,9 +6,11 @@ Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
   root "static_pages#index"
 
-  resources :documents
-
   resources :users, only: [:create]
+
+  get 'demo', to: 'documents#demo'
+  get 'documents', to: 'documents#index'
+  get 'documents/edit/:id', to: 'documents#index'
 
   devise_scope :user do
     get "login", to: "users/sessions#new"

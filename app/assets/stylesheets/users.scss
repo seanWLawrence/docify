@@ -1,14 +1,27 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import './lib';
 
-#signup,
-#signin {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 80vh;
-  margin-top: 60px;
+.Signup__Container,
+.Login__Container {
+  width: 90vw;
+  max-width: $desktop;
+  background-color: $color-white;
+
+  @include vertical-rythmn(10);
+  @include padding(20);
 }
 
+input[type='submit'] {
+  margin-top: $space * 5;
+}
 
+.Signup__Button {
+  margin-right: $space * 5;
+  margin-top: $space * 7.5;
+}
+
+.Login__SignupContainer {
+  border: $space solid $color-primary;
+  margin-top: $space * 10;
+
+  @include padding(10);
+}

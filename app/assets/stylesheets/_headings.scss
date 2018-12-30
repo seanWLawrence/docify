@@ -1,0 +1,42 @@
+@import './variables', './media_queries', './rythmn';
+
+@mixin heading($font-size) {
+  color: $color-dark;
+  font-weight: bold;
+  font-family: $font-family-header;
+  line-height: $font-size * 1.25;
+  font-size: $font-size;
+}
+
+@each $heading, $font-size in (h1, $font-size-h1), (h2, $font-size-h2),
+  (h3, $font-size-h3), (h4, $font-size-h4), (h5, $font-size-h5),
+  (h6, $font-size-h6)
+{
+  @include mobile {
+    #{$heading} {
+      @include heading($font-size * 0.4);
+      @include vertical-rythmn(5);
+    }
+  }
+
+  @include tablet {
+    #{$heading} {
+      @include heading($font-size * 0.55);
+      @include vertical-rythmn(5);
+    }
+  }
+
+  @include desktop {
+    #{$heading} {
+      @include heading($font-size * 0.75);
+      @include vertical-rythmn(5);
+    }
+  }
+
+  @include retina {
+    #{$heading} {
+      @include heading($font-size);
+      @include vertical-rythmn(5);
+    }
+  }
+}

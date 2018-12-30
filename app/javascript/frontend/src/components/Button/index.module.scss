@@ -1,0 +1,21 @@
+.Base {
+  border: 0;
+  outline-color: cornflowerblue;
+  padding: 10px 15px;
+  max-width: max-content;
+  margin: 10px;
+  cursor: pointer;
+  color: cornflowerblue;
+  background-color: rgba(240, 240, 240, 1);
+
+  &--Active {
+    border: 0;
+    outline-color: cornflowerblue;
+    padding: 10px 15px;
+    max-width: max-content;
+    margin: 10px;
+    cursor: pointer;
+    color: #fff;
+    background-color: cornflowerblue;
+  }
+}

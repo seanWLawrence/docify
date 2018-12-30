@@ -1,0 +1,36 @@
+@import './rythmn', './media_queries', './variables';
+
+@mixin body($font-size) {
+  font-family: $font-family-body;
+  color: $color-medium;
+  font-size: $font-size;
+  line-height: $font-size * 2;
+
+  &:first-of-type {
+    margin-top: $space * 5;
+  }
+}
+
+@include mobile {
+  p {
+    @include body($font-size-body * 0.7);
+  }
+}
+
+@include tablet {
+  p {
+    @include body($font-size-body * 0.8);
+  }
+}
+
+@include desktop {
+  p {
+    @include body($font-size-body * 0.9);
+  }
+}
+
+@include retina {
+  p {
+    @include body($font-size-body);
+  }
+}
