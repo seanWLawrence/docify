@@ -1,2 +1,2 @@
-web: bundle exec rails server -p $PORT
-frontend: yarn start
+web: bin/rails server -e production -p 3000
+webpacker: NODE_ENV=production ./bin/webpack
