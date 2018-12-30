@@ -8,7 +8,7 @@
     "test:watch": "jest --watch",
     "test:e2e": "cypress",
     "start": "foreman start -f Procfile.dev -p 3000",
-    "build": "foreman start -f Procfile -p 3000"
+    "start:production": "foreman start -f Procfile"
   },
   "keywords": [],
   "author": "Sean W. Lawrence <sean.w.lawrence@gmail.com>",
