@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index",
   "scripts": {
+    "precommit": "rm -rf public/assets public/packs && git add .",
     "commit": "git-cz",
     "test": "jest",
     "test:watch": "jest --watch",
