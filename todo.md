@@ -2,8 +2,8 @@
 
 - [x] loading spinner
 - [x] display toaster on successful save
-- create example document, log person in, and redirect to documents page on new
-  user registration
+- [x] create example document, log person in, and redirect to documents page on
+      new user registration
 - add hot keys to editor
 - add numbered list
 - add code blocks
@@ -11,9 +11,8 @@
 - undo/redo
 - add responsive images
 - add video embeds
-- truncate the first line to display in the documents page on the backend
-  - content(truncate: FIRST_BLOCK | CHARACTER_COUNT, truncateCharacterLength:
-    Int)
+- [x] truncate the first line to display in the documents page on the backend
+  - content(truncate: FIRST_BLOCK | NONE
 - add strikethrough
 - add mobile styles for editor and prettier toolbar with full functionality
 - add HTML, Markdown and PDF export (via '/document/:id/pdf' route) via backend
