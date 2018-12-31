@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index",
   "scripts": {
+    "commit": "git-cz",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:e2e": "cypress",
@@ -51,8 +52,10 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "commitizen": "^3.0.5",
     "css-loader": "^2.0.0",
     "cypress": "^3.1.4",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^5.11.1",
     "graphql": "^14.0.2",
     "jest": "^23.6.0",
@@ -65,5 +68,10 @@
     "webpack-cleanup-plugin": "^0.5.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
