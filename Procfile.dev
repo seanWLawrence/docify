@@ -1,2 +1,2 @@
-web: bundle exec rails s
-webpacker: ./bin/webpack-dev-server
+web: bin/rails server
+webpacker: NODE_ENV=development ./bin/webpack-dev-server

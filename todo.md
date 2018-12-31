@@ -1,8 +1,7 @@
 # MVP 1
 
 - [x] loading spinner
-- display toaster on successful save
-  - hint: use mutation props to trigger
+- [x] display toaster on successful save
 - create example document, log person in, and redirect to documents page on new
   user registration
 - add hot keys to editor
