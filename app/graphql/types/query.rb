@@ -5,7 +5,7 @@ module Types
     end
 
     def document(document_id:)
-      User.find(current_user.id).documents.find(document_id)
+      ::User.find(current_user.id).documents.find(document_id)
     end
 
     field :viewer, Types::User, null: true
