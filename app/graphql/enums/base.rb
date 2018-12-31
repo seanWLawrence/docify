@@ -1,2 +1,4 @@
-class Enums::Base < GraphQL::Schema::Enum
+module Enums
+  class Base < GraphQL::Schema::Enum
+  end
 end

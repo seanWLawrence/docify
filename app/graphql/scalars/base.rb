@@ -1,2 +1,4 @@
-class Scalars::Base < GraphQL::Schema::Scalar
+module Scalars
+  class Base < GraphQL::Schema::Scalar
+  end
 end
