@@ -4,19 +4,20 @@ import debounce from 'lodash.debounce';
 import { Mutation, Query } from 'react-apollo';
 
 import Editor from '../../components/Editor';
-import Toast from '../../components/Toast';
+import ToastContext from '../../contexts/Toast';
 import {
   formatContentForSlate,
   formatContentFromSlate,
-} from '../../components/Editor/htmlSerializer';
+} from '../../components/Editor/serializer';
 import viewerDocumentById from '../../queries/viewerDocumentById';
 import updateDocumentContent from '../../mutations/updateDocumentContent';
 import styles from './Edit.module.scss';
 
 const SAVE_INTERVAL_IN_MILLISECONDS = 1000;
-const TOAST_DISPLAY_LENGTH_IN_MILLISECONDS = 3000;
 
 export default class EditDocument extends Component {
+  static contextType = ToastContext;
+
   static propTypes = {
     documentId: Types.string.isRequired,
   };
@@ -47,8 +48,9 @@ export default class EditDocument extends Component {
   render() {
     let { documentId } = this.props;
     let { content } = this.state;
-    console.log(this.state);
+    let { displayToastMessage } = this.context;
 
+    displayToastMessage({ message: 'Saved successfully...' });
     return (
       <div className={styles.Edit__Container}>
         <Query query={viewerDocumentById} variables={{ documentId }}>
@@ -66,31 +68,20 @@ export default class EditDocument extends Component {
               <Mutation
                 mutation={updateDocumentContent}
                 onCompleted={() =>
-                  this.setState({ toastIsVisible: true }, () =>
-                    setTimeout(
-                      () => this.setState({ toastIsVisible: false }),
-                      TOAST_DISPLAY_LENGTH_IN_MILLISECONDS
-                    )
-                  )
+                  displayToastMessage({ message: 'Saved successfully...' })
                 }
               >
                 {(updateDocumentContentMutation, { data, loading, error }) => {
                   return (
-                    <React.Fragment>
-                      <Editor
-                        value={content || formatContentForSlate(queryContent)}
-                        onChange={({ value }) =>
-                          this.onChange({
-                            value,
-                            updateDocumentContentMutation,
-                          })
-                        }
-                      />
-                      <Toast
-                        isVisible={this.state.toastIsVisible}
-                        message="Saved successfully!"
-                      />
-                    </React.Fragment>
+                    <Editor
+                      value={content || formatContentForSlate(queryContent)}
+                      onChange={({ value }) =>
+                        this.onChange({
+                          value,
+                          updateDocumentContentMutation,
+                        })
+                      }
+                    />
                   );
                 }}
               </Mutation>

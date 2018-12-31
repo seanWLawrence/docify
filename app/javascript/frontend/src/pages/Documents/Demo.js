@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader/root';
 
 import Editor from '../../components/Editor';
-import { formatContentForSlate } from '../../components/Editor/htmlSerializer';
+import { formatContentForSlate } from '../../components/Editor/serializer';
 import demoContent from '../../components/Editor/_demoFixture';
 import styles from './Demo.module.scss';
 
