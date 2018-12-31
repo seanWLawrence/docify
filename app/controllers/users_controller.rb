@@ -8,7 +8,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to "/documents", notice: "User was successfully created." }
+        # Create user's first document
+        Document.create(user_id: @user.id, content: '<h1>Hello world!</h1>')
+
+        # Login user
+        sign_in(@user)
+
+        # Redirect to /documents page
+        format.html { redirect_to "/documents" }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { redirect_to "/signup" }
@@ -50,6 +57,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password)
   end
 end
