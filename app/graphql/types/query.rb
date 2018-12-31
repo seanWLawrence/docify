@@ -4,9 +4,7 @@ class Types::Query < Types::Base
   end
 
   def document(document_id:)
-    if ::Document.find(document_id).user.id == current_user.id
-      ::Document.find(document_id)
-    end
+    User.find(current_user.id).documents.find(document_id)
   end
 
   field :viewer, Types::User, null: true
