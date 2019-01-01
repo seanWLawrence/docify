@@ -4,14 +4,15 @@ import { Editor as Slate } from 'slate-react';
 
 import renderNode from './renderNode';
 import renderMark from './renderMark';
-import plugins from './plugins';
 import isHotKey from 'is-hotkey';
 import schema from './schema';
 
 let MarkHotKey = ({ type, key }) => ({
   onKeyDown(event, editor, next) {
-    if (event.key !== key) return next();
+    if (!isHotKey(key, event)) return next();
+
     event.preventDefault();
+
     editor.toggleMark(type);
   },
 });
@@ -19,13 +20,13 @@ let MarkHotKey = ({ type, key }) => ({
 let marks = [
   {
     type: 'bold',
-    key: 'b',
+    key: 'mod+b',
   },
-  { type: 'code', key: '`' },
-  { type: 'underlined', key: 'u' },
-  { type: 'deleted', key: '~' },
-  { type: 'added', key: '+' },
-  { type: 'italic', key: 'i' },
+  { type: 'code', key: 'mod+`' },
+  { type: 'underlined', key: 'mod+u' },
+  { type: 'deleted', key: 'mod+~' },
+  { type: 'added', key: 'mod+h' },
+  { type: 'italic', key: 'mod+i' },
 ];
 
 let KeyboardShortcutsPlugin = marks.map(mark =>
