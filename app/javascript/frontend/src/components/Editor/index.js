@@ -22,9 +22,9 @@ let marks = [
     type: 'bold',
     key: 'mod+b',
   },
-  { type: 'code', key: 'mod+`' },
+  { type: 'code', key: 'mod+.' },
   { type: 'underlined', key: 'mod+u' },
-  { type: 'deleted', key: 'mod+~' },
+  { type: 'deleted', key: 'mod+d' },
   { type: 'added', key: 'mod+h' },
   { type: 'italic', key: 'mod+i' },
 ];
