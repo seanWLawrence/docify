@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function inlineTypes(props, _editor, next) {
+export default function renderMark(props, _editor, next) {
   let {
     children,
     mark: { type },
@@ -9,7 +9,7 @@ export default function inlineTypes(props, _editor, next) {
 
   switch (type) {
     case 'added':
-      return <mark>{props.children}</mark>;
+      return <mark {...attributes}>{children}</mark>;
 
     case 'bold':
       return <strong {...attributes}>{children}</strong>;
@@ -18,7 +18,7 @@ export default function inlineTypes(props, _editor, next) {
       return <code {...attributes}>{children}</code>;
 
     case 'deleted':
-      return <del>{props.children}</del>;
+      return <del {...attributes}>{children}</del>;
 
     case 'italic':
       return <em {...attributes}>{children}</em>;

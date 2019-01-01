@@ -1,6 +1,5 @@
 import MarkdownSerializer from 'slate-md-serializer';
 
-let serializer = new MarkdownSerializer();
+let { serialize: toMarkdown, deserialize: toSlate } = new MarkdownSerializer();
 
-export let formatContentForSlate = content => serializer.deserialize(content);
-export let formatContentFromSlate = content => serializer.serialize(content);
+export { toMarkdown, toSlate };

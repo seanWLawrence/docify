@@ -5,10 +5,7 @@ import { Mutation, Query } from 'react-apollo';
 
 import Editor from '../../components/Editor';
 import ToastContext from '../../contexts/Toast';
-import {
-  formatContentForSlate,
-  formatContentFromSlate,
-} from '../../components/Editor/serializer';
+import { toMarkdown, toSlate } from '../../components/Editor/serializer';
 import viewerDocumentById from '../../queries/viewerDocumentById';
 import updateDocumentContent from '../../mutations/updateDocumentContent';
 import styles from './Edit.module.scss';

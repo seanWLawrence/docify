@@ -1,5 +1,5 @@
 import { getEventTransfer } from 'slate-react';
-import { formatContentForSlate } from '../serializer';
+import { toSlate } from '../serializer';
 
 export default function MarkdownPaste() {
   return {
@@ -8,7 +8,7 @@ export default function MarkdownPaste() {
       let { text } = transfer;
       if (transfer.type !== 'text' && transfer.type !== 'html') return;
 
-      let fragment = formatContentForSlate(text);
+      let fragment = toSlate(text);
       change.insertFragment(fragment.document);
 
       return change;

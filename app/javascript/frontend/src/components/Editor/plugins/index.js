@@ -8,20 +8,17 @@ import KeyboardShortcuts from './KeyboardShortcuts';
 import MarkdownPaste from './MarkdownPaste';
 import MarkdownShortcuts from './MarkdownShortcuts';
 
-export default function({ getLinkComponent }) {
-  return [
-    CollapseOnEscape({ toEdge: 'end' }),
-    EditList({
-      types: ['ordered-list', 'bulleted-list', 'todo-list'],
-      typeItem: 'list-item',
-      typeDefault: 'paragraph',
-    }),
-    Ellipsis(),
-    Embeds({ getComponent: getLinkComponent }),
-    KeyboardShortcuts(),
-    MarkdownPaste(),
-    MarkdownShortcuts(),
-    PasteLinkify({ type: 'link', collapseTo: 'end' }),
-    TrailingBlock({ type: 'paragraph' }),
-  ];
-}
+export default [
+  CollapseOnEscape({ toEdge: 'end' }),
+  EditList({
+    types: ['ordered-list', 'bulleted-list', 'todo-list'],
+    typeItem: 'list-item',
+    typeDefault: 'paragraph',
+  }),
+  Ellipsis(),
+  KeyboardShortcuts(),
+  MarkdownPaste(),
+  MarkdownShortcuts(),
+  PasteLinkify({ type: 'link', collapseTo: 'end' }),
+  TrailingBlock({ type: 'paragraph' }),
+];

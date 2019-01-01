@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Render an HTML element (aka Slate node)
  */
-export default function blockTypes(props, _editor, next) {
+export default function renderNode(props, _editor, next) {
   let {
     attributes,
     children,
@@ -39,13 +39,17 @@ export default function blockTypes(props, _editor, next) {
       return <h6 {...attributes}>{children}</h6>;
 
     case 'horizontal-rule':
-      return <hr />;
+      return <hr {...attributes} />;
 
     case 'image':
       return <img src={props.src} title={props.title} />;
 
     case 'link':
-      return <a href={props.href}>{props.children}</a>;
+      return (
+        <a href={props.href} {...attributes}>
+          {children}
+        </a>
+      );
 
     case 'list-item':
       return <li {...attributes}>{children}</li>;

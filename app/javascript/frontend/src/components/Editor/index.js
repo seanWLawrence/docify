@@ -1,11 +1,36 @@
 import React, { Component } from 'react';
 import Types from 'prop-types';
 import { Editor as Slate } from 'slate-react';
-import Plain from 'slate-plain-serializer';
 
-import renderNode from './nodes';
-import renderMark from './marks';
-import createPlugins from './plugins';
+import renderNode from './renderNode';
+import renderMark from './renderMark';
+import plugins from './plugins';
+import isHotKey from 'is-hotkey';
+import schema from './schema';
+
+let MarkHotKey = ({ type, key }) => ({
+  onKeyDown(event, editor, next) {
+    if (event.key !== key) return next();
+    event.preventDefault();
+    editor.toggleMark(type);
+  },
+});
+
+let marks = [
+  {
+    type: 'bold',
+    key: 'b',
+  },
+  { type: 'code', key: '`' },
+  { type: 'underlined', key: 'u' },
+  { type: 'deleted', key: '~' },
+  { type: 'added', key: '+' },
+  { type: 'italic', key: 'i' },
+];
+
+let KeyboardShortcutsPlugin = marks.map(mark =>
+  MarkHotKey({ type: mark.type, key: mark.key })
+);
 
 export default class Editor extends Component {
   static propTypes = {
@@ -17,16 +42,8 @@ export default class Editor extends Component {
     onChange: () => {},
   };
 
-  setEditorRef = ref => {
-    this.editor = ref;
-  };
-
-  focusAtEnd = () => {};
-
   render() {
     let { value, onChange } = this.props;
-
-    let plugins = createPlugins({ getLinkComponent: () => {} });
 
     return (
       <Slate
@@ -36,8 +53,9 @@ export default class Editor extends Component {
         renderNode={renderNode}
         renderMark={renderMark}
         onChange={onChange}
+        plugins={KeyboardShortcutsPlugin}
         value={value}
-        ref={this.setEditorRef}
+        schema={schema}
         placeholder="Start writing here..."
       />
     );
