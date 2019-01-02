@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Types from 'prop-types';
 import { Editor as Slate } from 'slate-react';
+import CollapseOnEscape from 'slate-collapse-on-escape';
+import AutoReplace from 'slate-auto-replace';
 
 import renderNode from './renderNode';
 import renderMark from './renderMark';
@@ -33,6 +35,57 @@ let KeyboardShortcutsPlugin = marks.map(mark =>
   MarkHotKey({ type: mark.type, key: mark.key })
 );
 
+let Blockquote = AutoReplace({
+  trigger: 'space',
+  before: /^(>)$/,
+  change: (event, _editor, _matches) =>
+    event.setBlocks({ type: 'block-quote' }),
+});
+
+let Heading1 = AutoReplace({
+  trigger: 'space',
+  before: /^(#)$/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'heading1' }),
+});
+
+let Heading2 = AutoReplace({
+  trigger: 'space',
+  before: /^(##)$/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'heading2' }),
+});
+
+let Heading3 = AutoReplace({
+  trigger: 'space',
+  before: /^(###)$/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'heading3' }),
+});
+
+let Heading4 = AutoReplace({
+  trigger: 'space',
+  before: /^(####)$/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'heading4' }),
+});
+
+let Heading5 = AutoReplace({
+  trigger: 'space',
+  before: /^(#####)$/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'heading5' }),
+});
+
+let Heading6 = AutoReplace({
+  trigger: 'space',
+  before: /^(######)$/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'heading6' }),
+});
+
+let ListItem = AutoReplace({
+  trigger: 'space',
+  before: /(^(-)$)|(^(\*)$)|(^(\+)$)/,
+  change: (event, _editor, _matches) => event.setBlocks({ type: 'list-item' }),
+});
+
+let Headings = [Heading1, Heading2, Heading3, Heading4, Heading5, Heading6];
+
 export default class Editor extends Component {
   static propTypes = {
     value: Types.object.isRequired,
@@ -42,6 +95,14 @@ export default class Editor extends Component {
   static defaultProps = {
     onChange: () => {},
   };
+
+  plugins = [
+    ...KeyboardShortcutsPlugin,
+    ...Headings,
+    Blockquote,
+    ListItem,
+    CollapseOnEscape(),
+  ];
 
   render() {
     let { value, onChange } = this.props;
@@ -54,7 +115,7 @@ export default class Editor extends Component {
         renderNode={renderNode}
         renderMark={renderMark}
         onChange={onChange}
-        plugins={KeyboardShortcutsPlugin}
+        plugins={this.plugins}
         value={value}
         schema={schema}
         placeholder="Start writing here..."

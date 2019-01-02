@@ -31,6 +31,8 @@
     "react-apollo": "^2.3.3",
     "react-dom": "^16.7.0",
     "slate": "^0.44.9",
+    "slate-auto-replace": "^0.12.1",
+    "slate-collapse-on-escape": "^0.8.1",
     "slate-md-serializer": "^5.2.2",
     "slate-react": "^0.21.15"
   },
