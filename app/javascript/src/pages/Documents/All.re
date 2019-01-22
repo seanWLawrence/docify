@@ -64,7 +64,8 @@ module Documents = {
              document =>
                switch (document##content) {
                | None => <NoContentMessage />
-               | Some(content) => <li> {content |> ReasonReact.string} </li>
+               | Some(content) =>
+                 <div dangerouslySetInnerHTML={"__html": content} />
                },
              documents,
            ),

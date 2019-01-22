@@ -224,7 +224,11 @@ function make$4(documents, _children) {
                         }, $$Array.map((function ($$document) {
                                 var match = $$document.content;
                                 if (match !== undefined) {
-                                  return React.createElement("li", undefined, match);
+                                  return React.createElement("div", {
+                                              dangerouslySetInnerHTML: {
+                                                __html: match
+                                              }
+                                            });
                                 } else {
                                   return ReasonReact.element(undefined, undefined, make$3(/* array */[]));
                                 }
