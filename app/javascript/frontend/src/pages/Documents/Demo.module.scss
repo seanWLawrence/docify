@@ -1,9 +1,0 @@
-@import '../../../../../assets/stylesheets/lib';
-
-.Demo__Container {
-  background-color: $color-white;
-  @include padding(20);
-  @include vertical-rythmn(10);
-  width: 90vw;
-  max-width: $desktop;
-}

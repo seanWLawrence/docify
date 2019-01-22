@@ -1,0 +1,58 @@
+bs_package_flags = -bs-package-map docify
+src_root_dir = /Users/sean/Code/docify
+bsc = /Users/sean/Code/docify/node_modules/bs-platform/lib/bsc.exe
+bsdep = /Users/sean/Code/docify/node_modules/bs-platform/lib/bsb_helper.exe
+warnings = -w -30-40+6+7+27+32..39+44+45+101
+bsc_flags = -bs-suffix -nostdlib -I '/Users/sean/Code/docify/node_modules/bs-platform/lib/ocaml' -bs-no-version-header -bs-super-errors -color always
+ppx_flags = -ppx '/Users/sean/Code/docify/node_modules/graphql_ppx/ppx'
+bs_package_includes = -I /Users/sean/Code/docify/node_modules/reason-react/lib/ocaml -I /Users/sean/Code/docify/node_modules/reason-apollo/lib/ocaml -I /Users/sean/Code/docify/node_modules/bs-css/lib/ocaml
+bs_package_dev_includes = 
+namespace = -ns Docify
+bsb_dir_group = 0
+refmt = /Users/sean/Code/docify/node_modules/bs-platform/lib/refmt.exe
+reason_react_jsx = -ppx '/Users/sean/Code/docify/node_modules/bs-platform/lib/reactjs_jsx_ppx_2.exe'
+refmt_flags = --print binary
+bsc_lib_includes = -I . -I app/javascript/src/components/Editor/plugins -I app/javascript/src/pages/Documents -I app/javascript/src
+rule build_ast_and_module_sets_from_re
+  command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
+  description = [34mBuilding[39m [2m${out}[22m
+build app/javascript/src/Theme.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/Theme.re
+rule build_deps
+  command = ${bsdep} ${namespace} -g ${bsb_dir_group} -MD ${in}
+  restat = 1
+  description = [34mBuilding[39m [2m${out}[22m
+build app/javascript/src/Theme.mlast.d : build_deps app/javascript/src/Theme.mlast
+rule build_cmj_cmi
+  command = ${bsc} ${bs_package_flags} -bs-assume-no-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
+  depfile = ${in}.d
+  restat = 1
+  description = [34mBuilding[39m [2m${out}[22m
+build app/javascript/src/Theme-Docify.cmj |  $src_root_dir/app/javascript/src/Theme.bs.js app/javascript/src/Theme-Docify.cmi : build_cmj_cmi app/javascript/src/Theme.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src
+build app/javascript/src/Utils.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/Utils.re
+build app/javascript/src/Utils.mlast.d : build_deps app/javascript/src/Utils.mlast
+build app/javascript/src/Utils-Docify.cmj |  $src_root_dir/app/javascript/src/Utils.bs.js app/javascript/src/Utils-Docify.cmi : build_cmj_cmi app/javascript/src/Utils.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src
+build app/javascript/src/pages/Documents/All.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/pages/Documents/All.re
+build app/javascript/src/pages/Documents/All.mlast.d : build_deps app/javascript/src/pages/Documents/All.mlast
+build app/javascript/src/pages/Documents/All-Docify.cmj |  $src_root_dir/app/javascript/src/pages/Documents/All.bs.js app/javascript/src/pages/Documents/All-Docify.cmi : build_cmj_cmi app/javascript/src/pages/Documents/All.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/pages/Documents
+build app/javascript/src/pages/Documents/Test.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/pages/Documents/Test.re
+build app/javascript/src/pages/Documents/Test.mlast.d : build_deps app/javascript/src/pages/Documents/Test.mlast
+build app/javascript/src/pages/Documents/Test-Docify.cmj |  $src_root_dir/app/javascript/src/pages/Documents/Test.bs.js app/javascript/src/pages/Documents/Test-Docify.cmi : build_cmj_cmi app/javascript/src/pages/Documents/Test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/pages/Documents
+build app/javascript/src/components/Editor/plugins/Ellipsis.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Editor/plugins/Ellipsis.re
+build app/javascript/src/components/Editor/plugins/Ellipsis.mlast.d : build_deps app/javascript/src/components/Editor/plugins/Ellipsis.mlast
+build app/javascript/src/components/Editor/plugins/Ellipsis-Docify.cmj |  $src_root_dir/app/javascript/src/components/Editor/plugins/Ellipsis.bs.js app/javascript/src/components/Editor/plugins/Ellipsis-Docify.cmi : build_cmj_cmi app/javascript/src/components/Editor/plugins/Ellipsis.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components/Editor/plugins
+rule build_package
+  command = ${bsc} -w -49 -no-alias-deps -c ${in}
+  restat = 1
+  description = [34mBuilding[39m [2m${out}[22m
+build Docify.cmi : build_package Docify.mlmap
+build build.ninja : phony  ||  Docify.cmi app/javascript/src/components/Editor/plugins/Ellipsis.mlast.d app/javascript/src/pages/Documents/Test.mlast.d app/javascript/src/pages/Documents/All.mlast.d app/javascript/src/Utils.mlast.d app/javascript/src/Theme.mlast.d

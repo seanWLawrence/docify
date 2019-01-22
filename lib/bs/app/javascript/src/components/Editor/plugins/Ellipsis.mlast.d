@@ -1,0 +1,1 @@
+app/javascript/src/components/Editor/plugins/Ellipsis-Docify.cmj :
