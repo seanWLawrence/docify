@@ -12,8 +12,6 @@ var ReasonApollo = require("reason-apollo/src/ReasonApollo.bs.js");
 var Utils$Docify = require("../../Utils.bs.js");
 var AllModuleScss = require("./All.module.scss");
 
-console.log(Utils$Docify.getClassName(AllModuleScss, "Documents__Container"));
-
 var ppx_printed_query = "query documents  {\nviewer  {\ndocuments  {\ncontent  \n}\n\n}\n\n}\n";
 
 function parse(value) {
@@ -221,7 +219,9 @@ function make$4(documents, _children) {
           /* willUpdate */component$3[/* willUpdate */7],
           /* shouldUpdate */component$3[/* shouldUpdate */8],
           /* render */(function (_self) {
-              return React.createElement("ul", undefined, $$Array.map((function ($$document) {
+              return React.createElement("div", {
+                          className: Utils$Docify.getClassName(AllModuleScss, "Documents__Container")
+                        }, $$Array.map((function ($$document) {
                                 var match = $$document.content;
                                 if (match !== undefined) {
                                   return React.createElement("li", undefined, match);
@@ -310,4 +310,4 @@ exports.make = make$5;
 exports.$$default = $$default;
 exports.default = $$default;
 exports.__esModule = true;
-/*  Not a pure module */
+/* AllDocumentsQuery Not a pure module */

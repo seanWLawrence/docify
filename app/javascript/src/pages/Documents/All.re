@@ -1,6 +1,6 @@
 [@bs.module] external styles: Js.Dict.t(string) = "./All.module.scss";
 
-Js.log(Utils.getClassName(styles, "Documents__Container"));
+open Utils;
 
 module AllDocuments = [%graphql
   {|
@@ -58,7 +58,7 @@ module Documents = {
   let make = (~documents, _children) => {
     ...component,
     render: _self =>
-      <ul>
+      <div className={getClassName(styles, "Documents__Container")}>
         {ReasonReact.array(
            Array.map(
              document =>
@@ -69,7 +69,7 @@ module Documents = {
              documents,
            ),
          )}
-      </ul>,
+      </div>,
   };
 };
 

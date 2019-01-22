@@ -1,2 +1,6 @@
-let getClassName = (dictionary: Js.Dict.t(string), property: string) =>
-  Js.Dict.get(dictionary, property);
+let getClassName = (dictionary: Js.Dict.t(string), className: string) => {
+  switch (Js.Dict.get(dictionary, className)) {
+  | Some(className) => className
+  | None => "Nothing found"
+  };
+};
