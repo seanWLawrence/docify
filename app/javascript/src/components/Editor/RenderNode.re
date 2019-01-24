@@ -1,10 +1,9 @@
-import React from 'react';
+/* Using raw helper since the spread attributes aren't valid in ReasonML */
 
-/**
- * Render an HTML element (aka Slate node)
- */
-export default function renderNode(props, _editor, next) {
-  let {
+let renderNode = [%raw
+  {|
+function (props, _editor, next) {
+   let {
     attributes,
     children,
     node: { type },
@@ -79,3 +78,10 @@ export default function renderNode(props, _editor, next) {
       return next();
   }
 }
+|}
+];
+
+/**
+ * Render an HTML element (aka Slate node)
+ */
+let default = renderNode;

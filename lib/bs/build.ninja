@@ -12,7 +12,7 @@ bsb_dir_group = 0
 refmt = /Users/sean/Code/docify/node_modules/bs-platform/lib/refmt.exe
 reason_react_jsx = -ppx '/Users/sean/Code/docify/node_modules/bs-platform/lib/reactjs_jsx_ppx_2.exe'
 refmt_flags = --print binary
-bsc_lib_includes = -I . -I app/javascript/src/components -I app/javascript/src/pages/Documents -I app/javascript/src
+bsc_lib_includes = -I . -I app/javascript/entries -I app/javascript/src/config -I app/javascript/src/queries -I app/javascript/src/components/Editor -I app/javascript/src/components -I app/javascript/src/pages/Documents -I app/javascript/src
 rule build_ast_and_module_sets_from_re
   command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
   description = [34mBuilding[39m [2m${out}[22m
@@ -45,6 +45,16 @@ build app/javascript/src/pages/Documents/Test.mlast.d : build_deps app/javascrip
 build app/javascript/src/pages/Documents/Test-Docify.cmj |  $src_root_dir/app/javascript/src/pages/Documents/Test.bs.js app/javascript/src/pages/Documents/Test-Docify.cmi : build_cmj_cmi app/javascript/src/pages/Documents/Test.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/pages/Documents
+build app/javascript/src/components/App.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/App.re
+build app/javascript/src/components/App.mlast.d : build_deps app/javascript/src/components/App.mlast
+build app/javascript/src/components/App-Docify.cmj |  $src_root_dir/app/javascript/src/components/App.bs.js app/javascript/src/components/App-Docify.cmi : build_cmj_cmi app/javascript/src/components/App.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components
+build app/javascript/src/components/Lazy.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Lazy.re
+build app/javascript/src/components/Lazy.mlast.d : build_deps app/javascript/src/components/Lazy.mlast
+build app/javascript/src/components/Lazy-Docify.cmj |  $src_root_dir/app/javascript/src/components/Lazy.bs.js app/javascript/src/components/Lazy-Docify.cmi : build_cmj_cmi app/javascript/src/components/Lazy.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components
 build app/javascript/src/components/Toast.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Toast.re
 build app/javascript/src/components/Toast.mlast.d : build_deps app/javascript/src/components/Toast.mlast
 build app/javascript/src/components/Toast-Docify.cmj |  $src_root_dir/app/javascript/src/components/Toast.bs.js app/javascript/src/components/Toast-Docify.cmi : build_cmj_cmi app/javascript/src/components/Toast.mlast
@@ -65,9 +75,54 @@ build app/javascript/src/components/Toolbar.mlast.d : build_deps app/javascript/
 build app/javascript/src/components/Toolbar-Docify.cmj |  $src_root_dir/app/javascript/src/components/Toolbar.bs.js app/javascript/src/components/Toolbar-Docify.cmi : build_cmj_cmi app/javascript/src/components/Toolbar.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components
+build app/javascript/src/components/Suspense.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Suspense.re
+build app/javascript/src/components/Suspense.mlast.d : build_deps app/javascript/src/components/Suspense.mlast
+build app/javascript/src/components/Suspense-Docify.cmj |  $src_root_dir/app/javascript/src/components/Suspense.bs.js app/javascript/src/components/Suspense-Docify.cmi : build_cmj_cmi app/javascript/src/components/Suspense.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components
+build app/javascript/src/components/Editor/RenderMark.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Editor/RenderMark.re
+build app/javascript/src/components/Editor/RenderMark.mlast.d : build_deps app/javascript/src/components/Editor/RenderMark.mlast
+build app/javascript/src/components/Editor/RenderMark-Docify.cmj |  $src_root_dir/app/javascript/src/components/Editor/RenderMark.bs.js app/javascript/src/components/Editor/RenderMark-Docify.cmi : build_cmj_cmi app/javascript/src/components/Editor/RenderMark.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components/Editor
+build app/javascript/src/components/Editor/RenderNode.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Editor/RenderNode.re
+build app/javascript/src/components/Editor/RenderNode.mlast.d : build_deps app/javascript/src/components/Editor/RenderNode.mlast
+build app/javascript/src/components/Editor/RenderNode-Docify.cmj |  $src_root_dir/app/javascript/src/components/Editor/RenderNode.bs.js app/javascript/src/components/Editor/RenderNode-Docify.cmi : build_cmj_cmi app/javascript/src/components/Editor/RenderNode.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components/Editor
+build app/javascript/src/components/Editor/Serializer.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Editor/Serializer.re
+build app/javascript/src/components/Editor/Serializer.mlast.d : build_deps app/javascript/src/components/Editor/Serializer.mlast
+build app/javascript/src/components/Editor/Serializer-Docify.cmj |  $src_root_dir/app/javascript/src/components/Editor/Serializer.bs.js app/javascript/src/components/Editor/Serializer-Docify.cmi : build_cmj_cmi app/javascript/src/components/Editor/Serializer.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components/Editor
+build app/javascript/src/components/Editor/DemoFixture.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/components/Editor/DemoFixture.re
+build app/javascript/src/components/Editor/DemoFixture.mlast.d : build_deps app/javascript/src/components/Editor/DemoFixture.mlast
+build app/javascript/src/components/Editor/DemoFixture-Docify.cmj |  $src_root_dir/app/javascript/src/components/Editor/DemoFixture.bs.js app/javascript/src/components/Editor/DemoFixture-Docify.cmi : build_cmj_cmi app/javascript/src/components/Editor/DemoFixture.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/components/Editor
+build app/javascript/src/queries/ViewerDocuments.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/queries/ViewerDocuments.re
+build app/javascript/src/queries/ViewerDocuments.mlast.d : build_deps app/javascript/src/queries/ViewerDocuments.mlast
+build app/javascript/src/queries/ViewerDocuments-Docify.cmj |  $src_root_dir/app/javascript/src/queries/ViewerDocuments.bs.js app/javascript/src/queries/ViewerDocuments-Docify.cmi : build_cmj_cmi app/javascript/src/queries/ViewerDocuments.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/queries
+build app/javascript/src/queries/ViewerDocumentById.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/queries/ViewerDocumentById.re
+build app/javascript/src/queries/ViewerDocumentById.mlast.d : build_deps app/javascript/src/queries/ViewerDocumentById.mlast
+build app/javascript/src/queries/ViewerDocumentById-Docify.cmj |  $src_root_dir/app/javascript/src/queries/ViewerDocumentById.bs.js app/javascript/src/queries/ViewerDocumentById-Docify.cmi : build_cmj_cmi app/javascript/src/queries/ViewerDocumentById.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/queries
+build app/javascript/src/config/ApolloClient.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/src/config/ApolloClient.re
+build app/javascript/src/config/ApolloClient.mlast.d : build_deps app/javascript/src/config/ApolloClient.mlast
+build app/javascript/src/config/ApolloClient-Docify.cmj |  $src_root_dir/app/javascript/src/config/ApolloClient.bs.js app/javascript/src/config/ApolloClient-Docify.cmi : build_cmj_cmi app/javascript/src/config/ApolloClient.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/src/config
+build app/javascript/entries/Documents.mlast : build_ast_and_module_sets_from_re $src_root_dir/app/javascript/entries/Documents.re
+build app/javascript/entries/Documents.mlast.d : build_deps app/javascript/entries/Documents.mlast
+build app/javascript/entries/Documents-Docify.cmj |  $src_root_dir/app/javascript/entries/Documents.bs.js app/javascript/entries/Documents-Docify.cmi : build_cmj_cmi app/javascript/entries/Documents.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output commonjs:app/javascript/entries
 rule build_package
   command = ${bsc} -w -49 -no-alias-deps -c ${in}
   restat = 1
   description = [34mBuilding[39m [2m${out}[22m
 build Docify.cmi : build_package Docify.mlmap
-build build.ninja : phony  ||  Docify.cmi app/javascript/src/components/Toolbar.mlast.d app/javascript/src/components/Spinner.mlast.d app/javascript/src/components/Button.mlast.d app/javascript/src/components/Toast.mlast.d app/javascript/src/pages/Documents/Test.mlast.d app/javascript/src/pages/Documents/All.mlast.d app/javascript/src/Utils.mlast.d app/javascript/src/Theme.mlast.d
+build build.ninja : phony  ||  Docify.cmi app/javascript/entries/Documents.mlast.d app/javascript/src/config/ApolloClient.mlast.d app/javascript/src/queries/ViewerDocumentById.mlast.d app/javascript/src/queries/ViewerDocuments.mlast.d app/javascript/src/components/Editor/DemoFixture.mlast.d app/javascript/src/components/Editor/Serializer.mlast.d app/javascript/src/components/Editor/RenderNode.mlast.d app/javascript/src/components/Editor/RenderMark.mlast.d app/javascript/src/components/Suspense.mlast.d app/javascript/src/components/Toolbar.mlast.d app/javascript/src/components/Spinner.mlast.d app/javascript/src/components/Button.mlast.d app/javascript/src/components/Toast.mlast.d app/javascript/src/components/Lazy.mlast.d app/javascript/src/components/App.mlast.d app/javascript/src/pages/Documents/Test.mlast.d app/javascript/src/pages/Documents/All.mlast.d app/javascript/src/Utils.mlast.d app/javascript/src/Theme.mlast.d

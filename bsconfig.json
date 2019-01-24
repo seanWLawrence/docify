@@ -9,7 +9,7 @@
   "bs-dependencies": ["reason-react", "reason-apollo", "bs-css"],
   "sources": [
     {
-      "dir": "app/javascript/src",
+      "dir": "app/javascript/",
       "subdirs": true
     }
   ],

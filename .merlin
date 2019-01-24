@@ -20,4 +20,12 @@ S app/javascript/src/pages/Documents
 B lib/bs/app/javascript/src/pages/Documents
 S app/javascript/src/components
 B lib/bs/app/javascript/src/components
+S app/javascript/src/components/Editor
+B lib/bs/app/javascript/src/components/Editor
+S app/javascript/src/queries
+B lib/bs/app/javascript/src/queries
+S app/javascript/src/config
+B lib/bs/app/javascript/src/config
+S app/javascript/entries
+B lib/bs/app/javascript/entries
 ####BSB GENERATED: NO EDIT}

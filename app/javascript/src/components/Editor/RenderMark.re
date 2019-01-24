@@ -1,20 +1,7 @@
-[@bs.deriving abstract]
+/* Using raw since spread attributes syntax is not valid in ReasonML */
 
-type props = {
-  mark: {
-  [@bs.as "type"] type_: string,
-  },
-  [@bs.as "aria-label"]
-  ariaLabel: string,
-};
-
-[@bs.val] external props: props = "props";
-
-
-let renderMark = (props, _editor, next) => {
-  
-
-
+let renderMark = [%raw
+  {| function (props, _editor, next) {
   let {
     children,
     mark: {type_},
@@ -45,8 +32,7 @@ let renderMark = (props, _editor, next) => {
     }
   }
 }
+|}
+];
 
 let default = renderMark;
-
-
-

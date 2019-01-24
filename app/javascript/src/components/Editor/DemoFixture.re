@@ -1,4 +1,4 @@
-export default `
+let default = {|
 # Create beautiful documents
 > Edit this page!
 Docify is focused on bringing you the best writing experience so you can focus on creating content and bringing your ideas to life.
@@ -24,4 +24,4 @@ Edit the CSS on any document to make it your own!
 ### Download in your favorite format
 - HTML
 - Markdown
-`;
+|};
