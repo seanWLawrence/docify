@@ -1,13 +1,27 @@
-import React from 'react';
+[@bs.deriving abstract]
 
-export default function renderMark(props, _editor, next) {
+type props = {
+  mark: {
+  [@bs.as "type"] type_: string,
+  },
+  [@bs.as "aria-label"]
+  ariaLabel: string,
+};
+
+[@bs.val] external props: props = "props";
+
+
+let renderMark = (props, _editor, next) => {
+  
+
+
   let {
     children,
-    mark: { type },
+    mark: {type_},
     attributes,
   } = props;
 
-  switch (type) {
+  switch (type_) {
     case 'added':
       return <mark {...attributes}>{children}</mark>;
 
@@ -31,3 +45,8 @@ export default function renderMark(props, _editor, next) {
     }
   }
 }
+
+let default = renderMark;
+
+
+

@@ -4,10 +4,10 @@ import { Editor as Slate } from 'slate-react';
 import CollapseOnEscape from 'slate-collapse-on-escape';
 import AutoReplace from 'slate-auto-replace';
 
-import renderNode from './renderNode';
-import renderMark from './renderMark';
+import renderNode from './Editor/renderNode';
+import renderMark from './Editor/renderMark';
 import isHotKey from 'is-hotkey';
-import schema from './schema';
+import schema from './Editor/schema';
 
 let MarkHotKey = ({ type, key }) => ({
   onKeyDown(event, editor, next) {

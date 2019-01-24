@@ -18,6 +18,6 @@ S app/javascript/src
 B lib/bs/app/javascript/src
 S app/javascript/src/pages/Documents
 B lib/bs/app/javascript/src/pages/Documents
-S app/javascript/src/components/Editor/plugins
-B lib/bs/app/javascript/src/components/Editor/plugins
+S app/javascript/src/components
+B lib/bs/app/javascript/src/components
 ####BSB GENERATED: NO EDIT}
