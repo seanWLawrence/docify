@@ -1,4 +1,5 @@
 import React from 'react';
+import Checkbox from '@components/Checkbox';
 
 /**
  * Render an HTML element (aka Slate node)
@@ -37,6 +38,9 @@ export default function blockTypes(props, _editor, next) {
 
     case 'list-item':
       return <li {...attributes}>{children}</li>;
+
+    case 'checkbox':
+      return <Checkbox {...props} />;
 
     case 'paragraph':
       return <p {...attributes}>{children}</p>;

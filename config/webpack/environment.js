@@ -1,5 +1,6 @@
 const { environment } = require('@rails/webpacker');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
+const path = require('path');
 
 const splitChunks = {
   optimization: {
@@ -20,5 +21,15 @@ environment.plugins.insert(
     publicPath: true, // rails defaults copied from webpacker
   })
 );
+
+let ROOT_PATH = path.resolve(__dirname, '../../app/javascript/frontend/src');
+
+environment.config.set('resolve.alias', {
+  '@components': path.resolve(ROOT_PATH, 'components'),
+  '@config': path.resolve(ROOT_PATH, 'config'),
+  '@mutations': path.resolve(ROOT_PATH, 'mutations'),
+  '@pages': path.resolve(ROOT_PATH, 'pages'),
+  '@queries': path.resolve(ROOT_PATH, 'queries'),
+});
 
 module.exports = environment;

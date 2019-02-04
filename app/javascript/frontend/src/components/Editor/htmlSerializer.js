@@ -14,7 +14,6 @@ const BLOCK_TYPES = {
   p: 'paragraph',
 };
 
-// Add a dictionary of mark tags.
 const INLINE_TYPES = {
   strong: 'bold',
   code: 'code',

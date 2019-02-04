@@ -8,6 +8,7 @@ import Toolbar from '../Toolbar';
 import renderNode from './blockTypes';
 import renderMark from './inlineTypes';
 import onKeyDown from './onKeyDown';
+import plugins from './plugins';
 
 export default class Editor extends Component {
   static propTypes = {
@@ -173,6 +174,7 @@ export default class Editor extends Component {
           onChange={onChange}
           value={value}
           ref={this.ref}
+          plugins={plugins}
           placeholder="Start writing here..."
         />
       </div>
