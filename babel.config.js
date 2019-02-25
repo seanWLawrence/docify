@@ -77,8 +77,8 @@ module.exports = function(api) {
         {
           removeImport: true,
         },
-        isProductionEnv && require('babel-plugin-lodash').default,
       ],
+      isProductionEnv && require('babel-plugin-lodash').default,
     ].filter(Boolean),
   };
 };

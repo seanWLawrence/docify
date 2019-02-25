@@ -4,7 +4,7 @@ import Checkbox from '@components/Checkbox';
 /**
  * Render an HTML element (aka Slate node)
  */
-export default function blockTypes(props, _editor, next) {
+export default function renderNode(props, _editor, next) {
   let {
     attributes,
     children,
@@ -17,6 +17,9 @@ export default function blockTypes(props, _editor, next) {
 
     case 'bulleted-list':
       return <ul {...attributes}>{children}</ul>;
+
+    case 'numbered-list':
+      return <ol {...attributes}>{children}</ol>;
 
     case 'heading-one':
       return <h1 {...attributes}>{children}</h1>;
@@ -41,6 +44,9 @@ export default function blockTypes(props, _editor, next) {
 
     case 'checkbox':
       return <Checkbox {...props} />;
+
+    case 'code-block':
+      return <pre {...attributes}>{children}</pre>;
 
     case 'paragraph':
       return <p {...attributes}>{children}</p>;

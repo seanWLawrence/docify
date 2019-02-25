@@ -1,0 +1,136 @@
+import React, { Component } from 'react';
+import Types from 'prop-types';
+import { debounce } from 'lodash';
+import { graphql, compose } from 'react-apollo';
+import { propType } from 'graphql-anywhere';
+import gql from 'graphql-tag';
+
+import Editor from '../components/Editor';
+import Toast from '../components/Toast';
+import Spinner from '../components/Spinner';
+import styles from './EditDocument.module.scss';
+import {
+  formatContentForSlate,
+  formatContentFromSlate,
+} from '../components/Editor/htmlSerializer';
+
+export class EditDocument extends Component {
+  state = {
+    content: null,
+    toastIsVisible: false,
+  };
+
+  onChange = ({ value }) => {
+    let {
+      props: { documentId, mutate },
+      state: { content },
+    } = this;
+
+    if (content && value.document != content.document) {
+      let debouncedMutation = debounce(mutate, SAVE_INTERVAL_IN_MILLISECONDS);
+
+      debouncedMutation({
+        variables: { documentId, content: formatContentFromSlate(value) },
+        update() {
+          this.setState({ toastIsVisible: true }, () =>
+            setTimeout(
+              () => this.setState({ toastIsVisible: false }),
+              TOAST_DISPLAY_LENGTH_IN_MILLISECONDS
+            )
+          );
+        },
+      });
+    }
+
+    this.setState({ content: value });
+  };
+
+  render() {
+    let {
+      props: {
+        documentId,
+        data: {
+          loading,
+          error,
+          document: { content: queryContent },
+        },
+      },
+      state: { content, toastIsVisible },
+      onChange,
+    } = this;
+
+    if (error) {
+      return (
+        <Toast
+          isVisible
+          message={`There was an error loading your document. ${error.message}`}
+        />
+      );
+    }
+
+    if (loading) {
+      return <Spinner isLoading />;
+    }
+
+    return (
+      <div className={styles.Container}>
+        <Editor
+          value={content || formatContentForSlate(queryContent)}
+          onChange={onChange}
+        />
+
+        <Toast isVisible={toastIsVisible} message="Saved successfully!" />
+      </div>
+    );
+  }
+
+  static fragments = {
+    document: gql`
+      fragment EditDocument on Document {
+        id
+        content
+      }
+    `,
+  };
+
+  static propTypes = {
+    documentId: Types.string.isRequired,
+    data: Types.shape({
+      loading: Types.bool,
+      error: Types.object,
+      document: propType(EditDocument.fragments.document).isRequired,
+    }).isRequired,
+  };
+}
+
+const SAVE_INTERVAL_IN_MILLISECONDS = 1000;
+const TOAST_DISPLAY_LENGTH_IN_MILLISECONDS = 3000;
+
+const DOCUMENT_QUERY = gql`
+  query DocumentQuery($documentId: ID!) {
+    document(documentId: $documentId) {
+      ...EditDocumentDocument
+    }
+  }
+  ${EditDocument.fragments.document}
+`;
+
+const EDIT_DOCUMENT_MUTATION = gql`
+  mutation UpdateDocument($documentId: ID!, $content: String!) {
+    updateDocumentContent(documentId: $documentId, content: $content) {
+      document {
+        id
+        content
+      }
+    }
+  }
+`;
+
+export default compose(
+  graphql(DOCUMENT_QUERY, {
+    options({ documentId }) {
+      return { variables: { documentId } };
+    },
+  }),
+  graphql(EDIT_DOCUMENT_MUTATION)
+);

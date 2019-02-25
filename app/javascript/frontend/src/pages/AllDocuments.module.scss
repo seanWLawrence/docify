@@ -1,6 +1,6 @@
-@import '../../../../../assets/stylesheets/lib';
+@import '../../../../assets/stylesheets/lib';
 
-.Documents__Container {
+.Container {
   background-color: $color-white;
   @include padding(20);
   @include vertical-rythmn(10);
@@ -8,7 +8,7 @@
   max-width: $desktop;
 }
 
-.Documents__Button--CreateNew {
+.Button--CreateNew {
   font-size: $font-size-h1;
   position: sticky;
   top: $space * 5;
@@ -21,15 +21,5 @@
   &:hover {
     color: lighten($color-primary, 10%);
     transition: color ease-in 0.25s;
-  }
-}
-
-.Document__Container {
-  border-left: $space solid transparent;
-  @include padding(5);
-
-  &:hover {
-    transition: border-left ease-in 0.5s;
-    border-left: $space solid $color-primary;
   }
 }

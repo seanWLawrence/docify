@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { hot } from 'react-hot-loader/root';
 
 let App = ({ children }) => {
-  return <React.Fragment>{children}</React.Fragment>;
+  return <>{children}</>;
 };
 
 App.propTypes = {

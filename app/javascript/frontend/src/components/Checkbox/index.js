@@ -13,9 +13,7 @@ export default function Checkbox({
   let onChange = event =>
     editor.setNodeByKey(node.key, { data: { checked: event.target.checked } });
 
-  let checked = node.data.get('checked');
-
-  let contentStyles = !checked ? styles.Content : styles['Content--Checked'];
+  let isChecked = node.data.get('checked');
 
   return (
     <div {...attributes} className={styles.Container}>
@@ -26,7 +24,7 @@ export default function Checkbox({
         checked={checked}
         contentEditable={!readOnly}
         suppressContentEditableWarning
-        className={contentStyles}
+        className={contentStyles(isChecked)}
       >
         {children}
       </span>
@@ -45,3 +43,6 @@ Checkbox.propTypes = {
 Checkbox.defaultProps = {
   readOnly: false,
 };
+
+let contentStyles = isChecked =>
+  !isChecked ? styles.Content : styles['Content--Checked'];

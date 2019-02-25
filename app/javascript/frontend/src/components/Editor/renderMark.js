@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function inlineTypes(props, _editor, next) {
+export default function renderMark(props, _editor, next) {
   let {
     children,
     mark: { type },
@@ -19,6 +19,12 @@ export default function inlineTypes(props, _editor, next) {
 
     case 'underlined':
       return <u {...attributes}>{children}</u>;
+
+    case 'strikethrough':
+      return <del {...attributes}>{children}</del>;
+
+    case 'mark':
+      return <mark {...attributes}>{children}</mark>;
 
     default: {
       return next();

@@ -1,16 +1,11 @@
 import AutoReplace from 'slate-auto-replace';
-import InsertImages from 'slate-drop-or-paste-images';
-import MarkHotkeys from 'slate-mark-hotkeys';
 import NoEmpty from 'slate-no-empty';
-import PasteLinkify from 'slate-paste-linkify';
 import CollapseOnEscape from 'slate-collapse-on-escape';
 
 export default [
   CollapseOnEscape(),
 
   NoEmpty('paragraph'),
-
-  PasteLinkify(),
 
   // inserts block quote with '>'
   AutoReplace({
@@ -75,12 +70,25 @@ export default [
     },
   }),
 
-  // inserts li with '-', '+', or '*'
+  // inserts bulleted list with li when '-', '+', or '*' are typed
   AutoReplace({
     trigger: 'space',
-    before: /^(-)$/,
+    before: /^(-|\+|\*)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'list-item' });
+      change.setBlocks({ type: 'list-item' });
+
+      return change.wrapBlock('bulleted-list');
+    },
+  }),
+
+  // inserts numbered list with li when '[number].' are typed
+  AutoReplace({
+    trigger: 'space',
+    before: /^([1-9]\.)$/,
+    change: (change, _e, _matches) => {
+      change.setBlocks({ type: 'list-item' });
+
+      return change.wrapBlock('numbered-list');
     },
   }),
 
@@ -91,15 +99,107 @@ export default [
     change: (change, _e, _matches) => change.setBlocks({ type: 'checkbox' }),
   }),
 
-  // inserts images on paste
-  InsertImages({
-    extensions: ['png', 'jpg', 'jpeg', 'svg'],
-    insertImage: (change, file) => {
-      return change.insertBlock({
-        type: 'image',
-        isVoid: true,
-        data: { file },
-      });
+  // adds <hr /> on '---' or '==='
+  AutoReplace({
+    trigger: 'space',
+    before: /^(---|===|\*\*\*|___)$/,
+    change: (change, _e, _matches) =>
+      change.setBlocks({ type: 'horizontal-rule' }),
+  }),
+
+  // start of word with either bold or italic
+  AutoReplace({
+    trigger: '*',
+    before: /\s$/,
+    change: (change, _e, _matches) => {
+      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
+
+      // if it's already italic and we enter another '*',
+      // we can assume we want bold instead
+      if (isItalic) {
+        return change.replaceMark('italic', 'bold');
+      }
+
+      return change.addMark({ type: 'italic' });
+    },
+  }),
+
+  // end of word with either bold or italic
+  AutoReplace({
+    trigger: '*',
+    before: /\w$/,
+    change: (change, _e, _matches) => {
+      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
+
+      if (isItalic) {
+        return change.removeMark({ type: 'italic' });
+      }
+
+      change.removeMark({ type: 'bold' });
+    },
+  }),
+
+  // start of word with either bold or italic
+  AutoReplace({
+    trigger: '_',
+    before: /\s$/,
+    change: (change, _e, _matches) => {
+      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
+
+      // if it's already italic and we enter another '*',
+      // we can assume we want bold instead
+      if (isItalic) {
+        return change.replaceMark('italic', 'bold');
+      }
+
+      return change.addMark({ type: 'italic' });
+    },
+  }),
+
+  // end of word with either bold or italich
+  AutoReplace({
+    trigger: '_',
+    before: /\w$/,
+    change: (change, _e, _matches) => {
+      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
+
+      if (isItalic) {
+        return change.removeMark({ type: 'italic' });
+      }
+
+      change.removeMark({ type: 'bold' });
+    },
+  }),
+
+  // start of word with either mark or strikethrough
+  AutoReplace({
+    trigger: '~',
+    before: /\s$/,
+    change: (change, _e, _matches) => {
+      let isMarked = change.value.marks.some(mark => mark.type === 'mark');
+
+      // if it's already marked and we enter another '~',
+      // we can assume we want strikethrough instead
+      if (isMarked) {
+        return change.replaceMark('mark', 'strikethrough');
+      }
+
+      return change.addMark({ type: 'mark' });
+    },
+  }),
+
+  // end of word with either bold or italic
+  AutoReplace({
+    trigger: '~',
+    before: /\w$/,
+    change: (change, _e, _matches) => {
+      let isMarked = change.value.marks.some(mark => mark.type === 'mark');
+
+      if (isMarked) {
+        return change.removeMark('mark');
+      }
+
+      return change.removeMark({ type: 'strikethrough' });
     },
   }),
 ];

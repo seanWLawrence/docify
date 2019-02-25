@@ -5,7 +5,6 @@ export default `
 <h3>Auto-formatting Markdown</h3>
 <ul>
 <li>Bulleted lists (using "*", "-", or "+")</li>
-<li>Numbered lists (using "1.", "2.", "3.", etc.)</li>
 <li>Headers (using "#", "##", "###", etc.)</li>
 <li>Blockquotes (using ">")</li>
 <li>Checkboxes (using "[ ]" for unchecked and "[x]" for checked)</li>
@@ -18,17 +17,5 @@ export default `
 <li>"Cmd/Ctrl + U" for underlined text</li>
 <li>"Cmd/Ctrl + ~" for strikethrough text</li>
 <li>"Cmd/Ctrl + \`" for code text</li>
-</ul>
-<h3>Rich text toolbar</h3>
-<p>Don't want to use Markdown or shortcuts? No problem. Docify provides access all of the rich text options from anywhere on the page.</p>
-<h3>Mobile-friendly</h3>
-<p>Edit your content from your phone, tablet or desktop using this site - try it out!</p>
-<h3>Customize your styles</h3>
-<p>Edit the CSS on any document to make it your own!</p>
-<h3>Download in your favorite format</h3>
-<ul>
-<li>HTML</li>
-<li>Markdown</li>
-<li>PDF</li>
 </ul>
 `;

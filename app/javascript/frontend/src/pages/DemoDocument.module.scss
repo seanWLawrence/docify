@@ -1,6 +1,6 @@
-@import '../../../../../assets/stylesheets/lib';
+@import '../../../../assets/stylesheets/lib';
 
-.Demo__Container {
+.Container {
   background-color: $color-white;
   @include padding(20);
   @include vertical-rythmn(10);

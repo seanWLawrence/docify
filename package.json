@@ -23,6 +23,7 @@
     "apollo-client": "^2.4.8",
     "apollo-link-http": "^1.5.9",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
+    "graphql-anywhere": "^4.1.28",
     "graphql-tag": "^2.10.0",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
