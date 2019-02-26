@@ -1,24 +1,31 @@
-# README
+# Docify 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A free Google alternative with first-class support for Markdown shortcuts.
 
-Things you may want to cover:
+## Demo
 
-* Ruby version
+https://docify-beta.herokuapp.com/
 
-* System dependencies
+## Tech stack
 
-* Configuration
+- Rails
+- React
+- Slate.js
+- Apollo
+- GraphQL
 
-* Database creation
+## Installation
 
-* Database initialization
+Coming soon
 
-* How to run the test suite
+## Usage
 
-* Services (job queues, cache servers, search engines, etc.)
+Coming soon
 
-* Deployment instructions
+## Contributing
 
-* ...
+Create a GitHub issue and let's talk!
+
+## License
+
+MIT
