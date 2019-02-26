@@ -46,6 +46,10 @@ module.exports = function(api) {
       require('babel-plugin-macros'),
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),
+      [
+        isDevelopmentEnv && require('babel-plugin-console-source').default,
+        { segments: 2 },
+      ],
       require('@babel/plugin-transform-destructuring').default,
       [
         require('@babel/plugin-proposal-class-properties').default,
@@ -79,6 +83,7 @@ module.exports = function(api) {
         },
       ],
       isProductionEnv && require('babel-plugin-lodash').default,
+      isProductionEnv && require('babel-plugin-groundskeeper-willie').default,
     ].filter(Boolean),
   };
 };
