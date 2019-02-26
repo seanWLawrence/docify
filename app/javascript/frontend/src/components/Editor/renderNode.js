@@ -24,32 +24,56 @@ export default function renderNode(props, _editor, next) {
     case 'list-item':
       return <li {...attributes}>{children}</li>;
 
-    case 'checkbox':
+    case 'todo-list':
       return <Checkbox {...props} />;
 
-    case 'heading-one':
+    case 'heading1':
       return <h1 {...attributes}>{children}</h1>;
 
-    case 'heading-two':
+    case 'heading2':
       return <h2 {...attributes}>{children}</h2>;
 
-    case 'heading-three':
+    case 'heading3':
       return <h3 {...attributes}>{children}</h3>;
 
-    case 'heading-four':
+    case 'heading4':
       return <h4 {...attributes}>{children}</h4>;
 
-    case 'heading-five':
+    case 'heading5':
       return <h5 {...attributes}>{children}</h5>;
 
-    case 'heading-six':
+    case 'heading6':
       return <h6 {...attributes}>{children}</h6>;
 
     case 'block-quote':
       return <blockquote {...attributes}>{children}</blockquote>;
 
-    case 'code-block':
-      return <pre {...attributes}>{children}</pre>;
+    case 'code':
+      return <code {...attributes}>{children}</code>;
+
+    // TODO
+
+    case 'link':
+      return (
+        <a href={props.href} title={props.title}>
+          {props.children}
+        </a>
+      );
+
+    case 'image':
+      return <img src={props.src} title={props.title} />;
+
+    case 'table':
+      return <table {...attributes}>{props.children}</table>;
+
+    case 'table-row':
+      return <tr {...attributes}>{props.children}</tr>;
+
+    case 'table-head':
+      return <th {...attributes}>{props.children}</th>;
+
+    case 'table-cell':
+      return <td {...attributes}>{props.children}</td>;
 
     default:
       return next();

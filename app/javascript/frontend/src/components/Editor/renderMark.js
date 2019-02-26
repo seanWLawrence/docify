@@ -20,10 +20,10 @@ export default function renderMark(props, _editor, next) {
     case 'underlined':
       return <u {...attributes}>{children}</u>;
 
-    case 'strikethrough':
+    case 'deleted':
       return <del {...attributes}>{children}</del>;
 
-    case 'marked':
+    case 'added':
       return <mark {...attributes}>{children}</mark>;
 
     default: {

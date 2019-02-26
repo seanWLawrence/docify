@@ -5,12 +5,12 @@ const BLOCK_TYPES = {
   blockquote: 'block-quote',
   ul: 'bulleted-list',
   li: 'list-item',
-  h1: 'heading-one',
-  h2: 'heading-two',
-  h3: 'heading-three',
-  h4: 'heading-four',
-  h5: 'heading-five',
-  h6: 'heading-six',
+  h1: 'heading1',
+  h2: 'heading2',
+  h3: 'heading3',
+  h4: 'heading4',
+  h5: 'heading5',
+  h6: 'heading6',
   p: 'paragraph',
 };
 
@@ -18,7 +18,8 @@ const INLINE_TYPES = {
   strong: 'bold',
   code: 'code',
   em: 'italic',
-  u: 'underline',
+  del: 'deleted',
+  mark: 'added',
 };
 
 let rules = [
@@ -41,35 +42,67 @@ let rules = [
     serialize(obj, children) {
       if (obj.object === 'block') {
         switch (obj.type) {
-          case 'block-quote':
-            return <blockquote>{children}</blockquote>;
+          case 'paragraph':
+            return <p {...attributes}>{children}</p>;
 
           case 'bulleted-list':
-            return <ul>{children}</ul>;
+            return <ul {...attributes}>{children}</ul>;
 
-          case 'heading-one':
-            return <h1>{children}</h1>;
-
-          case 'heading-two':
-            return <h2>{children}</h2>;
-
-          case 'heading-three':
-            return <h3>{children}</h3>;
-
-          case 'heading-four':
-            return <h4>{children}</h4>;
-
-          case 'heading-five':
-            return <h5>{children}</h5>;
-
-          case 'heading-six':
-            return <h6>{children}</h6>;
+          case 'numbered-list':
+            return <ol {...attributes}>{children}</ol>;
 
           case 'list-item':
-            return <li>{children}</li>;
+            return <li {...attributes}>{children}</li>;
 
-          case 'paragraph':
-            return <p>{children}</p>;
+          case 'todo-list':
+            return <Checkbox {...props} />;
+
+          case 'heading1':
+            return <h1 {...attributes}>{children}</h1>;
+
+          case 'heading2':
+            return <h2 {...attributes}>{children}</h2>;
+
+          case 'heading3':
+            return <h3 {...attributes}>{children}</h3>;
+
+          case 'heading4':
+            return <h4 {...attributes}>{children}</h4>;
+
+          case 'heading5':
+            return <h5 {...attributes}>{children}</h5>;
+
+          case 'heading6':
+            return <h6 {...attributes}>{children}</h6>;
+
+          case 'block-quote':
+            return <blockquote {...attributes}>{children}</blockquote>;
+
+          // TODO
+
+          case 'code':
+            return <code {...attributes}>{children}</code>;
+
+          case 'horizontal-rule':
+            return <hr />;
+
+          case 'image':
+            return <img src={props.src} title={props.title} />;
+
+          case 'link':
+            return <a href={props.href}>{props.children}</a>;
+
+          case 'table':
+            return <table {...attributes}>{props.children}</table>;
+
+          case 'table-row':
+            return <tr {...attributes}>{props.children}</tr>;
+
+          case 'table-head':
+            return <th {...attributes}>{props.children}</th>;
+
+          case 'table-cell':
+            return <td {...attributes}>{props.children}</td>;
         }
       }
     },
@@ -92,16 +125,19 @@ let rules = [
       if (obj.object === 'mark') {
         switch (obj.type) {
           case 'bold':
-            return <strong>{children}</strong>;
+            return <strong {...attributes}>{children}</strong>;
 
           case 'code':
-            return <code>{children}</code>;
+            return <code {...attributes}>{children}</code>;
 
           case 'italic':
-            return <em>{children}</em>;
+            return <em {...attributes}>{children}</em>;
 
-          case 'underlined':
-            return <u>{childen}</u>;
+          case 'deleted':
+            return <del {...attributes}>{children}</del>;
+
+          case 'added':
+            return <mark {...attributes}>{children}</mark>;
         }
       }
     },

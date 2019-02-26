@@ -22,7 +22,7 @@ export default [
     trigger: 'space',
     before: /^(#)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'heading-one' });
+      return change.setBlocks({ type: 'heading1' });
     },
   }),
 
@@ -31,7 +31,7 @@ export default [
     trigger: 'space',
     before: /^(##)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'heading-two' });
+      return change.setBlocks({ type: 'heading2' });
     },
   }),
 
@@ -40,7 +40,7 @@ export default [
     trigger: 'space',
     before: /^(###)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'heading-three' });
+      return change.setBlocks({ type: 'heading3' });
     },
   }),
 
@@ -49,7 +49,7 @@ export default [
     trigger: 'space',
     before: /^(####)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'heading-four' });
+      return change.setBlocks({ type: 'heading4' });
     },
   }),
 
@@ -58,7 +58,7 @@ export default [
     trigger: 'space',
     before: /^(#####)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'heading-five' });
+      return change.setBlocks({ type: 'heading5' });
     },
   }),
 
@@ -67,7 +67,7 @@ export default [
     trigger: 'space',
     before: /^(######)$/,
     change: (change, _e, _matches) => {
-      return change.setBlocks({ type: 'heading-six' });
+      return change.setBlocks({ type: 'heading6' });
     },
   }),
 
@@ -97,7 +97,21 @@ export default [
   AutoReplace({
     trigger: 'space',
     before: /^(\[\])$/,
-    change: (change, _e, _matches) => change.setBlocks({ type: 'checkbox' }),
+    change: (change, _e, _matches) => change.setBlocks({ type: 'todo-list' }),
+  }),
+
+  // formats inline code with '`'
+  AutoReplace({
+    trigger: '`',
+    before: /.|^/,
+    change: (change, _e, _matches) => change.toggleMark({ type: 'code' }),
+  }),
+
+  // formats code blocks with '```'
+  AutoReplace({
+    trigger: '```',
+    before: /.|^/,
+    change: (change, _e, _matches) => change.setBlocks({ type: 'code' }),
   }),
 
   // format bold or italic with '*' or '**'
@@ -148,18 +162,26 @@ export default [
     before: /.|^/,
     change: (change, _e, matches) => {
       let isMarked = change.value.marks.some(mark =>
-        isEqual(mark.type, 'marked')
+        isEqual(mark.type, 'added')
       );
 
-      change.toggleMark({ type: 'marked' });
+      change.toggleMark({ type: 'added' });
 
       if (!isStartOfWord(matches) && !isMarked) {
-        return change.toggleMark({ type: 'strikethrough' });
+        return change.toggleMark({ type: 'deleted' });
       }
 
       if (isStartOfWord(matches) && isMarked) {
-        return change.replaceMark('marked', 'strikethrough');
+        return change.replaceMark('added', 'deleted');
       }
+    },
+  }),
+
+  AutoReplace({
+    trigger: /./,
+    before: /(\[[A-Z]*\]\([A-Z]*\))/i,
+    change: (change, _e, matches) => {
+      console.log('LINK');
     },
   }),
 ];
