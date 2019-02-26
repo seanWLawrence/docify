@@ -1,6 +1,7 @@
 import AutoReplace from 'slate-auto-replace';
 import NoEmpty from 'slate-no-empty';
 import CollapseOnEscape from 'slate-collapse-on-escape';
+import { last, isEqual, pipe, getOr } from 'lodash/fp';
 
 export default [
   CollapseOnEscape(),
@@ -99,107 +100,76 @@ export default [
     change: (change, _e, _matches) => change.setBlocks({ type: 'checkbox' }),
   }),
 
-  // adds <hr /> on '---' or '==='
-  AutoReplace({
-    trigger: 'space',
-    before: /^(---|===|\*\*\*|___)$/,
-    change: (change, _e, _matches) =>
-      change.setBlocks({ type: 'horizontal-rule' }),
-  }),
-
-  // start of word with either bold or italic
+  // format bold or italic with '*' or '**'
   AutoReplace({
     trigger: '*',
-    before: /\s$/,
-    change: (change, _e, _matches) => {
-      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
+    before: /.|^/,
+    change: (change, _e, matches) => {
+      let isItalic = change.value.marks.some(mark =>
+        isEqual(mark.type, 'italic')
+      );
 
-      // if it's already italic and we enter another '*',
-      // we can assume we want bold instead
-      if (isItalic) {
+      change.toggleMark({ type: 'italic' });
+
+      if (!isStartOfWord(matches) && !isItalic) {
+        return change.toggleMark({ type: 'bold' });
+      }
+
+      if (isStartOfWord(matches) && isItalic) {
         return change.replaceMark('italic', 'bold');
       }
-
-      return change.addMark({ type: 'italic' });
     },
   }),
 
-  // end of word with either bold or italic
-  AutoReplace({
-    trigger: '*',
-    before: /\w$/,
-    change: (change, _e, _matches) => {
-      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
-
-      if (isItalic) {
-        return change.removeMark({ type: 'italic' });
-      }
-
-      change.removeMark({ type: 'bold' });
-    },
-  }),
-
-  // start of word with either bold or italic
+  // format bold or italic with '_' or '__'
   AutoReplace({
     trigger: '_',
-    before: /\s$/,
-    change: (change, _e, _matches) => {
-      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
+    before: /.|^/,
+    change: (change, _e, matches) => {
+      let isItalic = change.value.marks.some(mark =>
+        isEqual(mark.type, 'italic')
+      );
 
-      // if it's already italic and we enter another '*',
-      // we can assume we want bold instead
-      if (isItalic) {
+      change.toggleMark({ type: 'italic' });
+
+      if (!isStartOfWord(matches) && !isItalic) {
+        return change.toggleMark({ type: 'bold' });
+      }
+
+      if (isStartOfWord(matches) && isItalic) {
         return change.replaceMark('italic', 'bold');
       }
-
-      return change.addMark({ type: 'italic' });
     },
   }),
 
-  // end of word with either bold or italich
-  AutoReplace({
-    trigger: '_',
-    before: /\w$/,
-    change: (change, _e, _matches) => {
-      let isItalic = change.value.marks.some(mark => mark.type === 'italic');
-
-      if (isItalic) {
-        return change.removeMark({ type: 'italic' });
-      }
-
-      change.removeMark({ type: 'bold' });
-    },
-  }),
-
-  // start of word with either mark or strikethrough
+  // format marked or strikethrough with '~' or '~~'
   AutoReplace({
     trigger: '~',
-    before: /\s$/,
-    change: (change, _e, _matches) => {
-      let isMarked = change.value.marks.some(mark => mark.type === 'mark');
+    before: /.|^/,
+    change: (change, _e, matches) => {
+      let isMarked = change.value.marks.some(mark =>
+        isEqual(mark.type, 'marked')
+      );
 
-      // if it's already marked and we enter another '~',
-      // we can assume we want strikethrough instead
-      if (isMarked) {
-        return change.replaceMark('mark', 'strikethrough');
+      change.toggleMark({ type: 'marked' });
+
+      if (!isStartOfWord(matches) && !isMarked) {
+        return change.toggleMark({ type: 'strikethrough' });
       }
 
-      return change.addMark({ type: 'mark' });
-    },
-  }),
-
-  // end of word with either bold or italic
-  AutoReplace({
-    trigger: '~',
-    before: /\w$/,
-    change: (change, _e, _matches) => {
-      let isMarked = change.value.marks.some(mark => mark.type === 'mark');
-
-      if (isMarked) {
-        return change.removeMark('mark');
+      if (isStartOfWord(matches) && isMarked) {
+        return change.replaceMark('marked', 'strikethrough');
       }
-
-      return change.removeMark({ type: 'strikethrough' });
     },
   }),
 ];
+
+let lastCharacter = pipe(
+  getOr('', 'before.input'),
+  last
+);
+
+let isStartOfWord = pipe(
+  lastCharacter,
+  isEqual(' ')
+);

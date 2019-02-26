@@ -23,7 +23,7 @@ export default function renderMark(props, _editor, next) {
     case 'strikethrough':
       return <del {...attributes}>{children}</del>;
 
-    case 'mark':
+    case 'marked':
       return <mark {...attributes}>{children}</mark>;
 
     default: {

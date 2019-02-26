@@ -12,14 +12,20 @@ export default function renderNode(props, _editor, next) {
   } = props;
 
   switch (type) {
-    case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>;
+    case 'paragraph':
+      return <p {...attributes}>{children}</p>;
 
     case 'bulleted-list':
       return <ul {...attributes}>{children}</ul>;
 
     case 'numbered-list':
       return <ol {...attributes}>{children}</ol>;
+
+    case 'list-item':
+      return <li {...attributes}>{children}</li>;
+
+    case 'checkbox':
+      return <Checkbox {...props} />;
 
     case 'heading-one':
       return <h1 {...attributes}>{children}</h1>;
@@ -39,17 +45,11 @@ export default function renderNode(props, _editor, next) {
     case 'heading-six':
       return <h6 {...attributes}>{children}</h6>;
 
-    case 'list-item':
-      return <li {...attributes}>{children}</li>;
-
-    case 'checkbox':
-      return <Checkbox {...props} />;
+    case 'block-quote':
+      return <blockquote {...attributes}>{children}</blockquote>;
 
     case 'code-block':
       return <pre {...attributes}>{children}</pre>;
-
-    case 'paragraph':
-      return <p {...attributes}>{children}</p>;
 
     default:
       return next();
