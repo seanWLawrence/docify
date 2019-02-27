@@ -8,7 +8,7 @@ export default function renderNode(props, _editor, next) {
   let {
     attributes,
     children,
-    node: { type },
+    node: { type, data },
   } = props;
 
   switch (type) {
@@ -51,18 +51,25 @@ export default function renderNode(props, _editor, next) {
     case 'code':
       return <code {...attributes}>{children}</code>;
 
-    // TODO
+    case 'link': {
+      let href = data.get('href');
+      let title = data.get('title');
 
-    case 'link':
       return (
-        <a href={props.href} title={props.title}>
-          {props.children}
+        <a {...attributes} href={href} title={title}>
+          {children}
         </a>
       );
+    }
 
-    case 'image':
-      return <img src={props.src} title={props.title} />;
+    case 'image': {
+      let src = data.get('src');
+      let alt = data.get('alt');
 
+      return <img src={src} alt={alt} />;
+    }
+
+    // TODO
     case 'table':
       return <table {...attributes}>{props.children}</table>;
 

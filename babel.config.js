@@ -47,7 +47,7 @@ module.exports = function(api) {
       require('@babel/plugin-syntax-dynamic-import').default,
       isTestEnv && require('babel-plugin-dynamic-import-node'),
       [
-        isDevelopmentEnv && require('babel-plugin-console-source').default,
+        isDevelopmentEnv && require('babel-plugin-console-source'),
         { segments: 2 },
       ],
       require('@babel/plugin-transform-destructuring').default,

@@ -1,7 +1,16 @@
 import AutoReplace from 'slate-auto-replace';
 import NoEmpty from 'slate-no-empty';
 import CollapseOnEscape from 'slate-collapse-on-escape';
-import { last, isEqual, pipe, getOr } from 'lodash/fp';
+import {
+  first,
+  split,
+  last,
+  isEqual,
+  pipe,
+  getOr,
+  tail,
+  join,
+} from 'lodash/fp';
 
 export default [
   CollapseOnEscape(),
@@ -177,11 +186,35 @@ export default [
     },
   }),
 
+  // create links
   AutoReplace({
     trigger: /./,
-    before: /(\[[A-Z]*\]\([A-Z]*\))/i,
+    before: /([^!]\[.*\]\(.*\))/i,
     change: (change, _e, matches) => {
-      console.log('LINK');
+      change
+        .insertText(title(matches))
+        .moveFocusBackward(title(matches).length)
+        .wrapInline({
+          type: 'link',
+          data: { href: href(matches), title: title(matches) },
+        })
+        .moveToEnd();
+    },
+  }),
+
+  // create images
+  AutoReplace({
+    trigger: /./,
+    before: /(!\[.*\]\(.*\))/i,
+    change: (change, _e, matches) => {
+      change
+        .insertText(alt(matches))
+        .moveFocusBackward(alt(matches).length)
+        .wrapInline({
+          type: 'image',
+          data: { src: src(matches), alt: alt(matches) },
+        })
+        .moveToEnd();
     },
   }),
 ];
@@ -195,3 +228,37 @@ let isStartOfWord = pipe(
   lastCharacter,
   isEqual(' ')
 );
+
+let log = value => {
+  console.log(value);
+  return value;
+};
+
+let linkData = pipe(
+  getOr('', 'before[0]'),
+  split('](')
+);
+
+let title = pipe(
+  linkData,
+  first,
+  tail,
+  join('')
+);
+
+let href = pipe(
+  linkData,
+  last,
+  split(')'),
+  first
+);
+
+let alt = pipe(
+  linkData,
+  first,
+  tail,
+  tail,
+  join('')
+);
+
+let src = href;
