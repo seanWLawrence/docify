@@ -10,6 +10,7 @@ import {
   getOr,
   tail,
   join,
+  reverse,
 } from 'lodash/fp';
 
 export default [
@@ -102,11 +103,22 @@ export default [
     },
   }),
 
-  // adds checkbox on '[]'
+  // adds unchecked checkbox on '[]'
   AutoReplace({
     trigger: 'space',
     before: /^(\[\])$/,
-    change: (change, _e, _matches) => change.setBlocks({ type: 'todo-list' }),
+    change: (change, _e, _matches) => {
+      change.setBlocks({ type: 'todo-list', data: { checked: false } });
+    },
+  }),
+
+  // adds checked checkbox on '[x]'
+  AutoReplace({
+    trigger: 'space',
+    before: /^(\[x\])$/,
+    change: (change, _e, _matches) => {
+      change.setBlocks({ type: 'todo-list', data: { checked: true } });
+    },
   }),
 
   // formats inline code with '`'
@@ -217,6 +229,20 @@ export default [
         .moveToEnd();
     },
   }),
+
+  // create plugins on 'embed()'
+  AutoReplace({
+    trigger: /./,
+    before: /(embed\(.*\))/i,
+    change: (change, _e, matches) => {
+      console.log(embedSrc(matches));
+      change.insertBlock({
+        type: 'embed',
+        data: { src: embedSrc(matches) },
+        isVoid: true,
+      });
+    },
+  }),
 ];
 
 let lastCharacter = pipe(
@@ -262,3 +288,11 @@ let alt = pipe(
 );
 
 let src = href;
+
+let embedSrc = pipe(
+  getOr('', 'before[0]'),
+  split('embed('),
+  last,
+  reverse,
+  tail
+);

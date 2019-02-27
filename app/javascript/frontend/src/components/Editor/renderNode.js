@@ -63,10 +63,20 @@ export default function renderNode(props, _editor, next) {
     }
 
     case 'image': {
-      let src = data.get('src');
       let alt = data.get('alt');
 
-      return <img src={src} alt={alt} />;
+      return <img {...attributes} src={src} alt={alt} />;
+    }
+
+    case 'embed': {
+      let src = data.get('src');
+
+      return (
+        <span
+          {...attributes}
+          dangerouslySetInnerHTML={{ __html: data.get('src') }}
+        />
+      );
     }
 
     // TODO
