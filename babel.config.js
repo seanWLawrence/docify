@@ -45,9 +45,9 @@ module.exports = function(api) {
     plugins: [
       require('babel-plugin-macros'),
       require('@babel/plugin-syntax-dynamic-import').default,
-      isTestEnv && require('babel-plugin-dynamic-import-node'),
-      [
-        isDevelopmentEnv && require('babel-plugin-console-source').default,
+      isTestEnv && require('babel-plugin-dynamic-import-node').default,
+      isDevelopmentEnv && [
+        require('babel-plugin-console-source'),
         { segments: 2 },
       ],
       require('@babel/plugin-transform-destructuring').default,

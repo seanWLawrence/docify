@@ -18,10 +18,10 @@ export default function Checkbox({
   return (
     <div {...attributes} className={styles.Container}>
       <span contentEditable={false}>
-        <input type="checkbox" checked={checked} onChange={onChange} />
+        <input type="checkbox" checked={isChecked} onChange={onChange} />
       </span>
       <span
-        checked={checked}
+        checked={isChecked}
         contentEditable={!readOnly}
         suppressContentEditableWarning
         className={contentStyles(isChecked)}

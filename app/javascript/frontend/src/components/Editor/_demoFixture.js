@@ -30,6 +30,9 @@ export default `
 <p>*</p>
 <p>-</p>
 <p>+</p>
+<p>[]</p>
+<p>[x]</p>
+<h3>Rich text</h3>
 <p>And try adding some rich text by adding to the following shortcuts before and after a word or phrase:</p>
 <p>~<mark>highlighted</mark>~</p>
 <p>~~<del>strikethrough</del>~~</p>
