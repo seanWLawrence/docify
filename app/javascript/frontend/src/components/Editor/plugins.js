@@ -186,7 +186,7 @@ export default [
     },
   }),
 
-  // create links
+  // create links on [link text](href)'
   AutoReplace({
     trigger: /./,
     before: /([^!]\[.*\]\(.*\))/i,
@@ -202,7 +202,7 @@ export default [
     },
   }),
 
-  // create images
+  // create images on '![alt text](src)'
   AutoReplace({
     trigger: /./,
     before: /(!\[.*\]\(.*\))/i,
