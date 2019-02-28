@@ -82,16 +82,35 @@ export default function renderNode(props, _editor, next) {
         </div>
       );
 
-    // TODO
-
     case 'embed': {
       let src = data.get('src');
 
       return (
-        <span
+        <div
           {...attributes}
-          dangerouslySetInnerHTML={{ __html: data.get('src') }}
-        />
+          style={{
+            overflow: 'hidden',
+            paddingBottom: '56.25%',
+            position: 'relative',
+            height: 0,
+          }}
+        >
+          <iframe
+            src={src}
+            allowfullscreen
+            frameborder="0"
+            width="420"
+            height="315"
+            style={{
+              left: 0,
+              top: 0,
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+            }}
+          />
+          {children}
+        </div>
       );
     }
 

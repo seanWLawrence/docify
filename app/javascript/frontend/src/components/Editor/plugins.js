@@ -230,20 +230,6 @@ export default [
     },
   }),
 
-  // create plugins on 'embed()'
-  AutoReplace({
-    trigger: /./,
-    before: /(embed\(.*\))/i,
-    change: (change, _e, matches) => {
-      console.log(embedSrc(matches));
-      change.insertBlock({
-        type: 'embed',
-        data: { src: embedSrc(matches) },
-        isVoid: true,
-      });
-    },
-  }),
-
   // creates <hr /> with '---' or '***' or '===' on 'space'
   AutoReplace({
     trigger: 'space',
@@ -258,6 +244,20 @@ export default [
     before: /^(---|===|\*\*\*)/,
     change: (change, _e, matches) =>
       change.wrapBlock({ type: 'horizontal-rule', isVoid: true }),
+  }),
+
+  // create plugins on 'embed()'
+  AutoReplace({
+    trigger: /./,
+    before: /(embed\(.*\))/i,
+    change: (change, _e, matches) => {
+      console.log(embedSrc(matches));
+      change.insertBlock({
+        type: 'embed',
+        data: { src: embedSrc(matches) },
+        isVoid: true,
+      });
+    },
   }),
 ];
 
@@ -307,8 +307,10 @@ let src = href;
 
 let embedSrc = pipe(
   getOr('', 'before[0]'),
-  split('embed('),
-  last,
-  reverse,
-  tail
+  pipe(
+    split('src="'),
+    last,
+    split('"'),
+    first
+  )
 );
