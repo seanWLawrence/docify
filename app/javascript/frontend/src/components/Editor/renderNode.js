@@ -63,6 +63,7 @@ export default function renderNode(props, _editor, next) {
     }
 
     case 'image': {
+      let src = data.get('src');
       let alt = data.get('alt');
 
       return <img {...attributes} src={src} alt={alt} />;
@@ -97,8 +98,8 @@ export default function renderNode(props, _editor, next) {
         >
           <iframe
             src={src}
-            allowfullscreen
-            frameborder="0"
+            allowFullScreen
+            frameBorder="0"
             width="420"
             height="315"
             style={{

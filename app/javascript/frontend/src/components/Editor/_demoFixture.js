@@ -32,14 +32,20 @@ export default `
 <p>+</p>
 <p>[]</p>
 <p>[x]</p>
+<p></p>
+<p> [Example link](https://docify-beta.heroku-app.com/demo)</p>
+<p></p>
+<p>![Example image](https://images.unsplash.com/photo-1551223477-543187f00340?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80)</p>
+<p></p>
+<p>embed(https://www.youtube.com/embed/cVsQLlk-T0s)</p>
+<p></p>
+<small><strong>Pro tip</strong>: you can also use the full html code in the embed() tag</small>
 <h3>Rich text</h3>
 <p>And try adding some rich text by adding to the following shortcuts before and after a word or phrase:</p>
 <p>~<mark>highlighted</mark>~</p>
 <p>~~<del>strikethrough</del>~~</p>
 <p>*<em>italic</em>* or _<em>italic</em>_</p>
 <p>**<strong>bold</strong>** or __<strong>bold</strong>__</p>
-<p>[link title](link-url.com) for links</p>
-<p>![image alt text](image-url.com) for images</p>
 <p>\`<code>code</code>\`</p>
 <p>\`\`\`<code>\n// code block \n</code>\`\`\`</p>
 `;

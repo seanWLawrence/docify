@@ -10,7 +10,10 @@ import {
   getOr,
   tail,
   join,
+  stubTrue,
   reverse,
+  cond,
+  includes,
 } from 'lodash/fp';
 
 export default [
@@ -198,27 +201,28 @@ export default [
     },
   }),
 
-  // create links on [link text](href)'
+  // create links on '[link text](href)'
   AutoReplace({
-    trigger: /./,
+    trigger: 'space',
     before: /([^!]\[.*\]\(.*\))/i,
     change: (change, _e, matches) => {
       change
-        .insertText(title(matches))
+        .insertText(` ${title(matches)}`)
         .moveFocusBackward(title(matches).length)
         .wrapInline({
           type: 'link',
           data: { href: href(matches), title: title(matches) },
         })
-        .moveToEnd();
+        .moveToEnd()
+        .insertText(' ');
     },
   }),
 
   // create images on '![alt text](src)'
   AutoReplace({
-    trigger: /./,
+    trigger: 'space',
     before: /(!\[.*\]\(.*\))/i,
-    change: (change, _e, matches) => {
+    change: (change, _e, matches) =>
       change
         .insertText(alt(matches))
         .moveFocusBackward(alt(matches).length)
@@ -226,8 +230,8 @@ export default [
           type: 'image',
           data: { src: src(matches), alt: alt(matches) },
         })
-        .moveToEnd();
-    },
+        .moveToEnd()
+        .insertText(' '),
   }),
 
   // creates <hr /> with '---' or '***' or '===' on 'space'
@@ -248,10 +252,9 @@ export default [
 
   // create plugins on 'embed()'
   AutoReplace({
-    trigger: /./,
+    trigger: 'space',
     before: /(embed\(.*\))/i,
     change: (change, _e, matches) => {
-      console.log(embedSrc(matches));
       change.insertBlock({
         type: 'embed',
         data: { src: embedSrc(matches) },
@@ -305,7 +308,7 @@ let alt = pipe(
 
 let src = href;
 
-let embedSrc = pipe(
+let iframeSrc = pipe(
   getOr('', 'before[0]'),
   pipe(
     split('src="'),
@@ -314,3 +317,18 @@ let embedSrc = pipe(
     first
   )
 );
+
+let isIframe = pipe(
+  getOr('', 'before[0]'),
+  includes('src')
+);
+
+let stripEmbedTag = pipe(
+  getOr('', 'before[0]'),
+  split('embed('),
+  last,
+  split(')'),
+  first
+);
+
+let embedSrc = cond([[isIframe, iframeSrc], [stubTrue, stripEmbedTag]]);
