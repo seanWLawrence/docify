@@ -40,4 +40,6 @@ export default `
 <p>**<strong>bold</strong>** or __<strong>bold</strong>__</p>
 <p>[link title](link-url.com) for links</p>
 <p>![image alt text](image-url.com) for images</p>
+<p>\`<code>code</code>\`</p>
+<p>\`\`\`<code>\n// code block \n</code>\`\`\`</p>
 `;

@@ -68,6 +68,22 @@ export default function renderNode(props, _editor, next) {
       return <img {...attributes} src={src} alt={alt} />;
     }
 
+    case 'horizontal-rule':
+      return (
+        <div
+          {...attributes}
+          style={{
+            border: 0,
+            borderTop: '5px solid cornflowerblue',
+            margin: '20px 0',
+          }}
+        >
+          {children}
+        </div>
+      );
+
+    // TODO
+
     case 'embed': {
       let src = data.get('src');
 

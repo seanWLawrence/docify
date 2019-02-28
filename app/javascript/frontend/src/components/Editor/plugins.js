@@ -243,6 +243,22 @@ export default [
       });
     },
   }),
+
+  // creates <hr /> with '---' or '***' or '===' on 'space'
+  AutoReplace({
+    trigger: 'space',
+    before: /^(---|===|\*\*\*)/,
+    change: (change, _e, matches) =>
+      change.wrapBlock({ type: 'horizontal-rule', isVoid: true }),
+  }),
+
+  // creates <hr /> with '---' or '***' or '===' on 'enter'
+  AutoReplace({
+    trigger: 'enter',
+    before: /^(---|===|\*\*\*)/,
+    change: (change, _e, matches) =>
+      change.wrapBlock({ type: 'horizontal-rule', isVoid: true }),
+  }),
 ];
 
 let lastCharacter = pipe(
