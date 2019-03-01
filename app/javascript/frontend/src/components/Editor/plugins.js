@@ -14,6 +14,8 @@ import {
   reverse,
   cond,
   includes,
+  constant,
+  identity,
 } from 'lodash/fp';
 
 export default [
@@ -201,35 +203,15 @@ export default [
     },
   }),
 
-  // create links on '[link text](href)'
+  // create links on '[link text](href)' or images on '![alt text](src)'
   AutoReplace({
     trigger: 'space',
-    before: /([^!]\[.*\]\(.*\))/i,
-    change: (change, _e, matches) => {
+    before: /(!?\[.*\]\(.*\))/i,
+    change: (change, _e, matches) =>
       change
         .insertText(` ${title(matches)}`)
         .moveFocusBackward(title(matches).length)
-        .wrapInline({
-          type: 'link',
-          data: { href: href(matches), title: title(matches) },
-        })
-        .moveToEnd()
-        .insertText(' ');
-    },
-  }),
-
-  // create images on '![alt text](src)'
-  AutoReplace({
-    trigger: 'space',
-    before: /(!\[.*\]\(.*\))/i,
-    change: (change, _e, matches) =>
-      change
-        .insertText(alt(matches))
-        .moveFocusBackward(alt(matches).length)
-        .wrapInline({
-          type: 'image',
-          data: { src: src(matches), alt: alt(matches) },
-        })
+        .wrapInline(imageOrLink(matches))
         .moveToEnd()
         .insertText(' '),
   }),
@@ -279,27 +261,27 @@ let log = value => {
   return value;
 };
 
-let linkData = pipe(
+let splitLink = pipe(
   getOr('', 'before[0]'),
   split('](')
 );
 
 let title = pipe(
-  linkData,
+  splitLink,
   first,
   tail,
   join('')
 );
 
 let href = pipe(
-  linkData,
+  splitLink,
   last,
   split(')'),
   first
 );
 
 let alt = pipe(
-  linkData,
+  splitLink,
   first,
   tail,
   tail,
@@ -317,6 +299,23 @@ let iframeSrc = pipe(
     first
   )
 );
+
+let isImage = pipe(
+  getOr('', 'before[0]'),
+  includes('!')
+);
+
+let imageData = matches => ({
+  type: 'image',
+  data: { src: src(matches), alt: alt(matches) },
+});
+
+let linkData = matches => ({
+  type: 'link',
+  data: { href: href(matches), title: title(matches) },
+});
+
+let imageOrLink = cond([[isImage, imageData], [stubTrue, linkData]]);
 
 let isIframe = pipe(
   getOr('', 'before[0]'),
