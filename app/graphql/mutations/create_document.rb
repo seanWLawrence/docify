@@ -3,8 +3,30 @@ module Mutations
     field :document, Types::Document, null: false
     field :errors, [String], null: true
 
+
     def resolve
-      default_content = '<h1>Write your content here...</h1>'
+      default_content_hash = {
+        document: {
+          nodes: [
+            {
+              object: 'block',
+              type: 'paragraph',
+              nodes: [
+                {
+                  object: 'text',
+                  leaves: [
+                    {
+                      text: 'Write your content here...'
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+
+      default_content = JSON.generate(default_content_hash)
 
       document = current_user.documents.build(
         content: default_content, user_id: current_user.id

@@ -6,7 +6,9 @@ import renderNode from './renderNode';
 import renderMark from './renderMark';
 import onKeyDown from './onKeyDown';
 import plugins from './plugins';
+import SCHEMA from './schema';
 
+// TODO update and add schema with fixed heading
 export default class Editor extends Component {
   ref = editor => {
     this.editor = editor;

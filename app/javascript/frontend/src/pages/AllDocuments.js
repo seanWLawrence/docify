@@ -1,7 +1,8 @@
 import React from 'react';
 import Types from 'prop-types';
 import { graphql, compose } from 'react-apollo';
-import { propType } from 'graphql-anywhere';
+import gql from 'graphql-tag';
+import { propType, filter } from 'graphql-anywhere';
 import { navigate } from '@reach/router';
 
 import Document from '../components/Document';
@@ -9,14 +10,7 @@ import Spinner from '../components/Spinner';
 import Toast from '../components/Toast';
 import styles from './AllDocuments.module.scss';
 
-let AllDocuments = ({
-  data: {
-    loading,
-    error,
-    viewer: { documents },
-  },
-  mutate,
-}) => {
+let AllDocuments = ({ data: { loading, error, viewer }, mutate }) => {
   if (error) {
     return (
       <Toast
@@ -30,16 +24,18 @@ let AllDocuments = ({
     return <Spinner isLoading />;
   }
 
+  let { documents } = viewer;
+
   let hasDocuments = documents.length > 0;
 
   return (
     <div className={styles.Container}>
-      <CreateDocumentButton onClick={() => createDocument(mutate)} />
+      <CreateDocumentButton onClick={() => mutate(createDocument)} />
 
       {hasDocuments &&
         documents.map(document => (
           <Document
-            key={id}
+            key={document.id}
             document={filter(Document.fragments.document, document)}
           />
         ))}
@@ -51,19 +47,19 @@ let AllDocuments = ({
 
 AllDocuments.fragments = {
   viewer: gql`
-    fragment DocumentsViewer on User {
+    fragment AllDocumentsViewer on User {
       documents {
         id
-        ...DocumentViewer
+        ...DocumentDocument
       }
     }
-    ${Document.fragments.viewer}
+    ${Document.fragments.document}
   `,
 };
 
 AllDocuments.propTypes = {
   data: Types.shape({
-    viewer: propType(Documents.fragments.documents, viewer).isRequired,
+    viewer: propType(AllDocuments.fragments.viewer),
     loading: Types.bool,
     error: Types.object,
   }),
@@ -89,27 +85,28 @@ const CREATE_DOCUMENT_MUTATION = gql`
   }
 `;
 
-let CreateDocumentButton = onClick => (
+let CreateDocumentButton = ({ onClick }) => (
   <button className={styles['Button--CreateNew']} onClick={onClick}>
     +
   </button>
 );
 
-let createDocument = mutate =>
-  mutate({
-    update(
-      _cache,
-      {
-        data: {
-          createDocument: { id },
+let createDocument = {
+  update(
+    _cache,
+    {
+      data: {
+        createDocument: {
+          document: { id },
         },
-      }
-    ) {
-      if (id) {
-        navigate(`/documents/edit/${id}`);
-      }
-    },
-  });
+      },
+    }
+  ) {
+    if (id) {
+      navigate(`/documents/edit/${id}`);
+    }
+  },
+};
 
 export default compose(
   graphql(DOCUMENTS_QUERY),

@@ -78,8 +78,6 @@ let rules = [
           case 'block-quote':
             return <blockquote {...attributes}>{children}</blockquote>;
 
-          // TODO
-
           case 'code':
             return <code {...attributes}>{children}</code>;
 
@@ -87,11 +85,16 @@ let rules = [
             return <hr />;
 
           case 'image':
-            return <img src={props.src} title={props.title} />;
+            return <img src={props.src} alt={props.alt} />;
 
           case 'link':
-            return <a href={props.href}>{props.children}</a>;
+            return (
+              <a href={props.href} title={props.title}>
+                {props.children}
+              </a>
+            );
 
+          // TODO
           case 'table':
             return <table {...attributes}>{props.children}</table>;
 
@@ -146,8 +149,6 @@ let rules = [
 
 let htmlSerializer = new Html({ rules });
 
-export let formatContentForSlate = content =>
-  htmlSerializer.deserialize(content);
+export let toSlate = content => htmlSerializer.deserialize(content);
 
-export let formatContentFromSlate = content =>
-  htmlSerializer.serialize(content);
+export let fromSlate = content => htmlSerializer.serialize(content);

@@ -4,15 +4,12 @@ import { debounce } from 'lodash';
 import { graphql, compose } from 'react-apollo';
 import { propType } from 'graphql-anywhere';
 import gql from 'graphql-tag';
+import { Value } from 'slate';
 
 import Editor from '../components/Editor';
 import Toast from '../components/Toast';
 import Spinner from '../components/Spinner';
 import styles from './EditDocument.module.scss';
-import {
-  formatContentForSlate,
-  formatContentFromSlate,
-} from '../components/Editor/htmlSerializer';
 
 export class EditDocument extends Component {
   state = {
@@ -26,18 +23,20 @@ export class EditDocument extends Component {
       state: { content },
     } = this;
 
+    let self = this;
+
     if (content && value.document != content.document) {
       let debouncedMutation = debounce(mutate, SAVE_INTERVAL_IN_MILLISECONDS);
 
       debouncedMutation({
-        variables: { documentId, content: formatContentFromSlate(value) },
+        variables: { documentId, content: toGraphQl(value) },
         update() {
-          this.setState({ toastIsVisible: true }, () =>
-            setTimeout(
-              () => this.setState({ toastIsVisible: false }),
-              TOAST_DISPLAY_LENGTH_IN_MILLISECONDS
-            )
-          );
+          self.setState({ toastIsVisible: true }, function() {
+            setTimeout(function() {
+              self.setState({ toastIsVisible: false }),
+                TOAST_DISPLAY_LENGTH_IN_MILLISECONDS;
+            });
+          });
         },
       });
     }
@@ -48,14 +47,9 @@ export class EditDocument extends Component {
   render() {
     let {
       props: {
-        documentId,
-        data: {
-          loading,
-          error,
-          document: { content: queryContent },
-        },
+        data: { loading, error, document },
       },
-      state: { content, toastIsVisible },
+      state: { content: stateContent, toastIsVisible },
       onChange,
     } = this;
 
@@ -72,10 +66,12 @@ export class EditDocument extends Component {
       return <Spinner isLoading />;
     }
 
+    let { content: queryContent } = document;
+
     return (
       <div className={styles.Container}>
         <Editor
-          value={content || formatContentForSlate(queryContent)}
+          value={stateContent || fromGraphQl(queryContent)}
           onChange={onChange}
         />
 
@@ -86,7 +82,7 @@ export class EditDocument extends Component {
 
   static fragments = {
     document: gql`
-      fragment EditDocument on Document {
+      fragment EditDocumentDocument on Document {
         id
         content
       }
@@ -98,10 +94,13 @@ export class EditDocument extends Component {
     data: Types.shape({
       loading: Types.bool,
       error: Types.object,
-      document: propType(EditDocument.fragments.document).isRequired,
+      document: propType(EditDocument.fragments.document),
     }).isRequired,
   };
 }
+
+let fromGraphQl = value => Value.fromJSON(JSON.parse(value));
+let toGraphQl = value => JSON.stringify(value.toJSON());
 
 const SAVE_INTERVAL_IN_MILLISECONDS = 1000;
 const TOAST_DISPLAY_LENGTH_IN_MILLISECONDS = 3000;
@@ -116,7 +115,7 @@ const DOCUMENT_QUERY = gql`
 `;
 
 const EDIT_DOCUMENT_MUTATION = gql`
-  mutation UpdateDocument($documentId: ID!, $content: String!) {
+  mutation UpdateDocument($documentId: ID!, $content: SlateValue!) {
     updateDocumentContent(documentId: $documentId, content: $content) {
       document {
         id
@@ -133,4 +132,4 @@ export default compose(
     },
   }),
   graphql(EDIT_DOCUMENT_MUTATION)
-);
+)(EditDocument);
