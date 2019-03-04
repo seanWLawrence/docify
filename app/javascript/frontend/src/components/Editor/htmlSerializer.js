@@ -4,6 +4,7 @@ import Html from 'slate-html-serializer';
 const BLOCK_TYPES = {
   blockquote: 'block-quote',
   ul: 'bulleted-list',
+  ol: 'numbered-list',
   li: 'list-item',
   h1: 'heading1',
   h2: 'heading2',
@@ -12,12 +13,17 @@ const BLOCK_TYPES = {
   h5: 'heading5',
   h6: 'heading6',
   p: 'paragraph',
+  iframe: 'embed',
+  img: 'image',
+  a: 'link',
+  hr: 'horizontal-rule',
 };
 
 const INLINE_TYPES = {
   strong: 'bold',
   code: 'code',
   em: 'italic',
+  u: 'underlined',
   del: 'deleted',
   mark: 'added',
 };

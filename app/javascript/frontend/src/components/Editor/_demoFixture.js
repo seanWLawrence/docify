@@ -48,4 +48,5 @@ export default `
 <p>**<strong>bold</strong>** or __<strong>bold</strong>__</p>
 <p>\`<code>code</code>\`</p>
 <p>\`\`\`<code>\n// code block \n</code>\`\`\`</p>
+<p>Or use common keyboard shortcuts, like <code>Cmd+B</code> for <strong>bold</strong>, <code>Cmd+I</code> for <em>italic</em> or <code>Cmd+U</code> for <u>underlined</u>.</p> 
 `;

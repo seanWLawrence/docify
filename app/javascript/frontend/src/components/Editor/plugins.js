@@ -1,6 +1,7 @@
 import AutoReplace from 'slate-auto-replace';
 import NoEmpty from 'slate-no-empty';
 import CollapseOnEscape from 'slate-collapse-on-escape';
+import MarkHotkeys from 'slate-mark-hotkeys';
 import {
   first,
   split,
@@ -11,17 +12,23 @@ import {
   tail,
   join,
   stubTrue,
-  reverse,
   cond,
   includes,
-  constant,
-  identity,
 } from 'lodash/fp';
 
 export default [
   CollapseOnEscape(),
 
   NoEmpty('paragraph'),
+
+  // adds marks with standard keyboard shortcuts
+  MarkHotkeys({
+    keysToMarks: {
+      b: 'bold',
+      i: 'italic',
+      u: 'underlined',
+    },
+  }),
 
   // inserts block quote with '>'
   AutoReplace({
