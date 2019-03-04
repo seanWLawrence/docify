@@ -1,7 +1,7 @@
 import AutoReplace from 'slate-auto-replace';
 import NoEmpty from 'slate-no-empty';
 import CollapseOnEscape from 'slate-collapse-on-escape';
-import MarkHotkeys from 'slate-mark-hotkeys';
+import isHotKey from 'is-hotkey';
 import {
   first,
   split,
@@ -21,14 +21,20 @@ export default [
 
   NoEmpty('paragraph'),
 
-  // adds marks with standard keyboard shortcuts
-  MarkHotkeys({
-    keysToMarks: {
-      b: 'bold',
-      i: 'italic',
-      u: 'underlined',
-    },
-  }),
+  // adds bold on 'command + b'
+  MarkHotkey({ key: 'mod+b', type: 'bold' }),
+
+  // adds underlined on 'command + u'
+  MarkHotkey({ key: 'mod+u', type: 'underlined' }),
+
+  // adds italic on 'command + i'
+  MarkHotkey({ key: 'mod+i', type: 'italic' }),
+
+  // adds code on 'control + `'
+  MarkHotkey({ key: 'ctrl+`', type: 'code' }),
+
+  // adds deleted on 'control + shift + `'
+  MarkHotkey({ key: 'ctrl+shift+`', type: 'deleted' }),
 
   // inserts block quote with '>'
   AutoReplace({
@@ -263,11 +269,6 @@ let isStartOfWord = pipe(
   isEqual(' ')
 );
 
-let log = value => {
-  console.log(value);
-  return value;
-};
-
 let splitLink = pipe(
   getOr('', 'before[0]'),
   split('](')
@@ -338,3 +339,17 @@ let stripEmbedTag = pipe(
 );
 
 let embedSrc = cond([[isIframe, iframeSrc], [stubTrue, stripEmbedTag]]);
+
+let MarkHotkey = ({ type, key }) => {
+  return {
+    onKeyDown(event, editor, next) {
+      if (isHotKey(key, event)) {
+        event.preventDefault();
+
+        return editor.toggleMark(type);
+      }
+
+      return next();
+    },
+  };
+};

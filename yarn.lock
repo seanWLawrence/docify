@@ -9017,14 +9017,6 @@ slate-html-serializer@^0.7.33:
   dependencies:
     type-of "^2.0.1"
 
-slate-mark-hotkeys@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/slate-mark-hotkeys/-/slate-mark-hotkeys-0.2.0.tgz#00d8b0f8a2885abc546b5db49bc5b35e93c65978"
-  integrity sha512-JfSL2FxcA6HZpEzkG32cl1A8gD9mWa+kp/VeYX0yLboFSEtiuRGRI9e4/KlMSGfHd54lm2vuwHtwV9r9KLjY2A==
-  dependencies:
-    is-hotkey "^0.0.3"
-    type-of "^2.0.1"
-
 slate-no-empty@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/slate-no-empty/-/slate-no-empty-0.1.0.tgz#caaf4a6363985b181a8b9ae2a6d63cbba6f710ee"

@@ -60,7 +60,6 @@
     "slate-collapse-on-escape": "^0.8.1",
     "slate-drop-or-paste-images": "^0.9.1",
     "slate-html-serializer": "^0.7.33",
-    "slate-mark-hotkeys": "^0.2.0",
     "slate-no-empty": "^0.1.0",
     "slate-paste-linkify": "^0.7.0",
     "slate-react": "^0.21.15",
