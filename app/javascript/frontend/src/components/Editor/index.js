@@ -14,10 +14,14 @@ export default class Editor extends Component {
     this.editor = editor;
   };
 
+  componentDidMount() {
+    this.editor.moveFocusToEndOfDocument();
+  }
+
   render() {
     let {
       ref,
-      props: { onChange, value },
+      props: { onChange, value, readOnly },
     } = this;
 
     return (
@@ -33,12 +37,19 @@ export default class Editor extends Component {
         ref={ref}
         plugins={plugins}
         placeholder="Start writing here..."
+        readOnly={readOnly}
       />
     );
   }
 
   static propTypes = {
-    onChange: Types.func.isRequired,
     value: Types.object.isRequired,
+    onChange: Types.func,
+    readOnly: Types.bool,
+  };
+
+  static defaultProps = {
+    readOnly: false,
+    onChange: () => {},
   };
 }
