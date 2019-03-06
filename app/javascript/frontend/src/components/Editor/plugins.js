@@ -16,6 +16,20 @@ import {
   includes,
 } from 'lodash/fp';
 
+let MarkHotkey = ({ type, key }) => {
+  return {
+    onKeyDown(event, editor, next) {
+      if (isHotKey(key, event)) {
+        event.preventDefault();
+
+        return editor.toggleMark(type);
+      }
+
+      return next();
+    },
+  };
+};
+
 export default [
   CollapseOnEscape(),
 
@@ -339,17 +353,3 @@ let stripEmbedTag = pipe(
 );
 
 let embedSrc = cond([[isIframe, iframeSrc], [stubTrue, stripEmbedTag]]);
-
-let MarkHotkey = ({ type, key }) => {
-  return {
-    onKeyDown(event, editor, next) {
-      if (isHotKey(key, event)) {
-        event.preventDefault();
-
-        return editor.toggleMark(type);
-      }
-
-      return next();
-    },
-  };
-};
